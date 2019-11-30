@@ -4,21 +4,24 @@
  * and open the template in the editor.
  */
 
+package Controller;
+import beans.Machines;
+import beans.DatabaseLocal;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.*;
+import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+
 
 /**
  *
  * @author r0631
  */
-@WebServlet(urlPatterns = {"/controller.do"})
+// @WebServlet(urlPatterns = {"/controller.do"})
 public class controller extends HttpServlet {
 
     /**
@@ -30,9 +33,20 @@ public class controller extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    
+    @EJB private DatabaseLocal db;
+
+    @Override
+    public void init()
+    {
+        List <Machines> ma= db.getMachines();
+        getServletContext().setAttribute("machines",ma);
+    }
+
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String knop = request.getParameter("knop");
+       String knop = request.getParameter("knop");
         String username = request.getParameter("username");
 
         if (knop.equals("login"))
@@ -52,7 +66,7 @@ public class controller extends HttpServlet {
         if (knop.equals("overzicht"))
         {
            RequestDispatcher view = request.getRequestDispatcher("login.jsp");
-           view.forward (request, response) ;
+           view.forward (request, response);
         }
 /*            if (request.isUserInRole("Docent")){
             sessie.setAttribute("type","Docent");
@@ -68,10 +82,8 @@ public class controller extends HttpServlet {
             sessie.setAttribute("type","Extern");
             RequestDispatcher view = request.getRequestDispatcher ("overzicht.jsp" );
             view.forward (request,response );*/
-       
-            
-        }
- 
+                
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -111,5 +123,5 @@ public class controller extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
+    
 }

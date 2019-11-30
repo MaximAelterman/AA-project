@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bean_pkg;
+package beans;
 
 import java.util.List;
 import javax.ejb.Local;
@@ -14,8 +14,7 @@ import javax.ejb.Local;
  */
 @Local
 public interface DatabaseLocal {
-    //List<Machines> getMachines();
-    Object getGebruiker(String l);
-    List getMachines();
-    List getReservaties(int m);
+    public Object getGebruiker(String l);
+    public List getMachines();
+    public List getReservaties(int m);
 }

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bean_pkg;
+package beans;
 
 import java.util.List;
 import javax.ejb.Stateless;
@@ -19,8 +19,7 @@ public class Database implements DatabaseLocal {
     
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
-    @PersistenceContext
-    private EntityManager em;
+    @PersistenceContext private EntityManager em;
     /*
     @Override
     public List<Machines> getMachines() {
