@@ -3,8 +3,10 @@
     Created on : 13-nov-2019, 16:10:49
     Author     : r0631103
 --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="java.util.ArrayList"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -16,13 +18,13 @@
         <p>dit is test </p>
         
         <div class="container">
-            <c:forEach var="machine" items="${machines}">
+            <c:forEach var="machine" items="${applicationScope.machines}">
                 <div class='info'>
                     <h3>${machine.mnaam}</h3>
                     <p>Lokaal: ${machine.mloc}</p>
                     <p>Opleiding: ${machine.opleiding}</p>
                 </div>
-            </c:foreach>
+            </c:forEach>
         </div>
     </body>
 </html>

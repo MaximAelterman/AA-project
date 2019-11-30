@@ -39,8 +39,11 @@ public class controller extends HttpServlet {
     @Override
     public void init()
     {
-        List <Machines> ma= db.getMachines();
-        getServletContext().setAttribute("machines",ma);
+        List <Machines> ma = db.getMachines();
+        System.out.println("********* TEST ***********");
+        System.out.println(ma.get(0).getMnaam());
+        System.out.println(ma.get(1).getMnaam());
+        getServletContext().setAttribute("machines", ma);
     }
 
     

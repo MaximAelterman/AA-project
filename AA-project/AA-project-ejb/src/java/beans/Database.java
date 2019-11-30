@@ -20,24 +20,26 @@ public class Database implements DatabaseLocal {
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
     @PersistenceContext private EntityManager em;
-    /*
+    
     @Override
     public List<Machines> getMachines() {
         List<Machines> machinelijst;
         machinelijst = (List<Machines>) em.createQuery("SELECT m FROM Machines m").getResultList();
         return machinelijst;
     }
-    */
+    
     @Override
     public Object getGebruiker(String l){
         Gebruikers gebr = (Gebruikers) em.createNamedQuery("Gebruikers.findByLogin").setParameter("login",l).getSingleResult();
         return gebr;
     }
+/*
     @Override
     public List getMachines(){
         List ma = em.createNamedQuery("Machines.findAll").getResultList();
         return ma;
     }
+*/
     @Override
     public List getReservaties(int m){
         List<Reservaties> res= em.createQuery("SELECT r FROM Reservaties").getResultList();

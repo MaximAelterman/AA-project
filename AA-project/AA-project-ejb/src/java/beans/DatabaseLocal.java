@@ -15,6 +15,6 @@ import javax.ejb.Local;
 @Local
 public interface DatabaseLocal {
     public Object getGebruiker(String l);
-    public List getMachines();
+    public List<Machines> getMachines();
     public List getReservaties(int m);
 }
