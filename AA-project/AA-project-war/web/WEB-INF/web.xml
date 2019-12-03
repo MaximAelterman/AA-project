@@ -13,5 +13,38 @@
             30
         </session-timeout>
     </session-config>
-
+    <security-constraint>
+        <display-name>Constraint1</display-name>
+        <web-resource-collection>
+            <web-resource-name>contraint</web-resource-name>
+            <description/>
+            <url-pattern>/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>Student</role-name>
+            <role-name>Docent</role-name>
+            <role-name>Extern</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <login-config>
+        <auth-method>FORM</auth-method>
+        <realm-name>projectRealm</realm-name>
+        <form-login-config>
+            <form-login-page>/login.jsp</form-login-page>
+            <form-error-page>/error.jsp</form-error-page>
+        </form-login-config>
+    </login-config>
+    <security-role>
+        <description/>
+        <role-name>Student</role-name>
+    </security-role>
+    <security-role>
+        <description/>
+        <role-name>Docent</role-name>
+    </security-role>
+    <security-role>
+        <description/>
+        <role-name>Extern</role-name>
+    </security-role>
 </web-app>

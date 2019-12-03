@@ -55,7 +55,7 @@ public class controller extends HttpServlet {
         HttpSession sessie = request.getSession();
         String knop = request.getParameter("knop");
         String username;
-
+/*
         if(knop.equals("login"))
         {
             username = request.getParameter("username");
@@ -90,7 +90,12 @@ public class controller extends HttpServlet {
                 }
             }
         }
-        
+                
+        if(knop.equals("overzicht"))
+        {
+           RequestDispatcher view = request.getRequestDispatcher("login.jsp");
+           view.forward (request, response);
+        }*/
         if(knop.equals("Details"))
         {
             BigDecimal mnr = new BigDecimal(request.getParameter("details"));
@@ -99,27 +104,21 @@ public class controller extends HttpServlet {
             RequestDispatcher view = request.getRequestDispatcher("details.jsp");
             view.forward(request, response);
         }
-        
-        if(knop.equals("overzicht"))
-        {
-           RequestDispatcher view = request.getRequestDispatcher("login.jsp");
-           view.forward (request, response);
+        if (request.isUserInRole("Docent")){
+            sessie.setAttribute("groep","Docent");
+            RequestDispatcher view = request.getRequestDispatcher ("overzicht.jsp" );
+            view.forward (request,response );
         }
-/*            if (request.isUserInRole("Docent")){
-            sessie.setAttribute("type","Docent");
+        else if (request.isUserInRole("Student")){
+            sessie.setAttribute("groep","Student");
             RequestDispatcher view = request.getRequestDispatcher ("overzicht.jsp" );
             view.forward (request,response );
-            }
-            else if (request.isUserInRole("Student")){
-            sessie.setAttribute("type","Student");
+        }
+        else{
+            sessie.setAttribute("groep","Extern");
             RequestDispatcher view = request.getRequestDispatcher ("overzicht.jsp" );
             view.forward (request,response );
-            }
-            else{
-            sessie.setAttribute("type","Extern");
-            RequestDispatcher view = request.getRequestDispatcher ("overzicht.jsp" );
-            view.forward (request,response );*/
-                
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

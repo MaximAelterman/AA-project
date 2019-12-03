@@ -30,11 +30,10 @@
     </style>
     <body>
     <h1>Login:</h1>
-<!--        <form method= "post" action="j_security_check" > -->
-         <form method= "post" action=<c:url value="/controller.do"/>>
-            <p> username : <input type="text"  name= "username" ></p>
-            <p> password: <input type="password"  name="password" ></p>
-            <input class='button'   type="submit" name="knop" value="login"/>
+        <form method= "post" action="j_security_check" > 
+            <p> username : <input type="text"  name= "j_username" ></p>
+            <p> password: <input type="password"  name="j_password" ></p>
+            <input class='button' type="submit" name="knop" value="login"/>
         </form>    
     </body>
 </html>
