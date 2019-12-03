@@ -5,6 +5,7 @@
  */
 package beans;
 
+import java.math.BigDecimal;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -16,5 +17,6 @@ import javax.ejb.Local;
 public interface DatabaseLocal {
     public Object getGebruiker(String l);
     public List<Machines> getMachines();
+    public Machines getMachine(BigDecimal mnr);
     public List getReservaties(int m);
 }

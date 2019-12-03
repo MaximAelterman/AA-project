@@ -5,10 +5,12 @@
  */
 package beans;
 
+import java.math.BigDecimal;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -33,13 +35,14 @@ public class Database implements DatabaseLocal {
         Gebruikers gebr = (Gebruikers) em.createNamedQuery("Gebruikers.findByLogin").setParameter("login",l).getSingleResult();
         return gebr;
     }
-/*
+    
     @Override
-    public List getMachines(){
-        List ma = em.createNamedQuery("Machines.findAll").getResultList();
-        return ma;
+    public Machines getMachine(BigDecimal mnr){
+        Query query = em.createQuery("SELECT m FROM Machines m WHERE m.mnr = :mnr");
+        query.setParameter("mnr", mnr);
+        return (Machines)query.getSingleResult();
     }
-*/
+
     @Override
     public List getReservaties(int m){
         List<Reservaties> res= em.createQuery("SELECT r FROM Reservaties").getResultList();

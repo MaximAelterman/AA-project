@@ -8,6 +8,8 @@ package Controller;
 import beans.Machines;
 import beans.DatabaseLocal;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.*;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
@@ -15,6 +17,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 
 /**
@@ -49,24 +52,55 @@ public class controller extends HttpServlet {
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       String knop = request.getParameter("knop");
-        String username = request.getParameter("username");
+        HttpSession sessie = request.getSession();
+        String knop = request.getParameter("knop");
+        String username;
 
-        if (knop.equals("login"))
+        if(knop.equals("login"))
         {
-            if (username.equals("test"))
-            {
-                RequestDispatcher view = request.getRequestDispatcher("overzicht.jsp");
-                 view.forward(request, response);
-            }
-            else
-            {
-                RequestDispatcher view = request.getRequestDispatcher("login.jsp");
-                 view.forward(request, response);
+            username = request.getParameter("username");
+            sessie.setAttribute("username", username);
+            switch (username) {
+                case "student":
+                {
+                    sessie.setAttribute("groep", "student");
+                    RequestDispatcher view = request.getRequestDispatcher("overzicht.jsp");
+                    view.forward(request, response);
+                    break;
+                }
+                case "docent":
+                {
+                    sessie.setAttribute("groep", "docent");
+                    RequestDispatcher view = request.getRequestDispatcher("overzicht.jsp");
+                    view.forward(request, response);
+                    break;
+                }
+                case "extern":
+                {
+                    sessie.setAttribute("groep", "extern");
+                    RequestDispatcher view = request.getRequestDispatcher("overzicht.jsp");
+                    view.forward(request, response);
+                    break;
+                }
+                default:
+                {
+                    RequestDispatcher view = request.getRequestDispatcher("login.jsp");
+                    view.forward(request, response);
+                    break;
+                }
             }
         }
         
-        if (knop.equals("overzicht"))
+        if(knop.equals("Details"))
+        {
+            BigDecimal mnr = new BigDecimal(request.getParameter("details"));
+            Machines machine = db.getMachine(mnr);
+            sessie.setAttribute("machine", machine);
+            RequestDispatcher view = request.getRequestDispatcher("details.jsp");
+            view.forward(request, response);
+        }
+        
+        if(knop.equals("overzicht"))
         {
            RequestDispatcher view = request.getRequestDispatcher("login.jsp");
            view.forward (request, response);

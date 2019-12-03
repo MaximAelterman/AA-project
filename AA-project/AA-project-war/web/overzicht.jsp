@@ -14,17 +14,18 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Dit is een overzichtspagina</h1>
-        <p>dit is test </p>
+        <h1>Overzichtspagina</h1>
+        <h2>Welkom! U bent ingelogd als ${sessionScope.groep}.</h2>
         
         <div class="container">
-            <c:forEach var="machine" items="${applicationScope.machines}">
-                <div class='info'>
-                    <h3>${machine.mnaam}</h3>
-                    <p>Lokaal: ${machine.mloc}</p>
-                    <p>Opleiding: ${machine.opleiding}</p>
-                </div>
-            </c:forEach>
+            <table>
+                <tr><th>Naam</th><th>Locatie</th><th>Opleiding</th><th></th></tr>
+                <c:forEach var="machine" items="${applicationScope.machines}">
+                    <form method= "post" action=<c:url value="/controller.do"/>>
+                    <tr><td>${machine.mnaam}</td><td>${machine.mloc}</td><td>${machine.opleiding}</td><td><input type="submit" name="knop" value="Details"/><input type="hidden" name="details" value="${machine.mnr}"/></td></tr>
+                    </form>
+                </c:forEach>
+            </table>
         </div>
     </body>
 </html>
