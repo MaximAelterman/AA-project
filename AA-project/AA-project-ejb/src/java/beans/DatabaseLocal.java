@@ -18,5 +18,7 @@ public interface DatabaseLocal {
     public Object getGebruiker(String l);
     public List<Machines> getMachines();
     public Machines getMachine(BigDecimal mnr);
+    public BigDecimal addMachine(String naam, String locatie, String opleiding, BigDecimal aankoopprijs, BigDecimal huurprijs, String omschrijving);
     public List getReservaties(int m);
+    public BigDecimal volgendMnr();
 }

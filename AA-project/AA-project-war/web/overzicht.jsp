@@ -18,6 +18,11 @@
         <h2>Welkom! U bent ingelogd als ${sessionScope.groep}.</h2>
         
         <div class="container">
+            <c:if test="${sessionScope.groep == 'Docent'}">
+                <form method= "post" action=<c:url value="/controller.do"/>>
+                   <input type="submit" name="knop" value="Nieuwe machine"/>
+                </form>
+            </c:if>
             <table>
                 <tr><th>Naam</th><th>Locatie</th><th>Opleiding</th><th></th></tr>
                 <c:forEach var="machine" items="${applicationScope.machines}">
