@@ -87,35 +87,51 @@ public class controller extends HttpServlet {
                     break;
                 }
             }
-        }
-                
-        if(knop.equals("overzicht"))
-        {
-           RequestDispatcher view = request.getRequestDispatcher("login.jsp");
-           view.forward (request, response);
         }*/
-        if(knop.equals("Details")){
-            BigDecimal mnr = new BigDecimal(request.getParameter("details"));
-            Machines machine = db.getMachine(mnr);
-            sessie.setAttribute("machine", machine);
-            RequestDispatcher view = request.getRequestDispatcher("details.jsp");
-            view.forward(request, response);
-        }
-        else if(knop.equals("Nieuwe machine")){
-            RequestDispatcher view = request.getRequestDispatcher("machine.jsp");
-            view.forward(request, response);
-        }
-        else if(knop.equals("Machine toevoegen")){
-            String naam = request.getParameter("naam");
-            String locatie = request.getParameter("locatie");
-            String opleiding = request.getParameter("opleiding");
-            BigDecimal aankoopprijs = new BigDecimal(request.getParameter("aankoopprijs"));
-            BigDecimal huurprijs = new BigDecimal(request.getParameter("huurprijs"));
-            String omschrijving = request.getParameter("opleiding");
-            db.addMachine(naam, locatie, opleiding, aankoopprijs, huurprijs, omschrijving);
-            init();     //om de machinelijst in de applicatie opnieuw in te laden
-            RequestDispatcher view = request.getRequestDispatcher("overzicht.jsp");
-            view.forward(request, response);
+        switch (knop) {
+            case "overzicht":
+                {
+                    RequestDispatcher view = request.getRequestDispatcher("overzicht.jsp");
+                    view.forward (request, response);
+                    break;
+                }
+                
+            case "logout":
+                {
+                    sessie.removeAttribute("groep");
+                    response.sendRedirect("controller.do" );
+                }
+            case "Details":
+                {
+                    BigDecimal mnr = new BigDecimal(request.getParameter("details"));
+                    Machines machine = db.getMachine(mnr);
+                    sessie.setAttribute("machine", machine);
+                    RequestDispatcher view = request.getRequestDispatcher("details.jsp");
+                    view.forward(request, response);
+                    break;
+                }
+            case "Nieuwe machine":
+                {
+                    RequestDispatcher view = request.getRequestDispatcher("machine.jsp");
+                    view.forward(request, response);
+                    break;
+                }
+            case "Machine toevoegen":
+                {
+                    String naam = request.getParameter("naam");
+                    String locatie = request.getParameter("locatie");
+                    String opleiding = request.getParameter("opleiding");
+                    BigDecimal aankoopprijs = new BigDecimal(request.getParameter("aankoopprijs"));
+                    BigDecimal huurprijs = new BigDecimal(request.getParameter("huurprijs"));
+                    String omschrijving = request.getParameter("opleiding");
+                    db.addMachine(naam, locatie, opleiding, aankoopprijs, huurprijs, omschrijving);
+                    init();     //om de machinelijst in de applicatie opnieuw in te laden
+                    RequestDispatcher view = request.getRequestDispatcher("overzicht.jsp");
+                    view.forward(request, response);
+                    break;
+                }
+            default:
+                break;
         }
         
         if (request.isUserInRole("Docent")){

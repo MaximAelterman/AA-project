@@ -5,11 +5,11 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="styles.css">
         <title>JSP Page</title>
     </head>
     <style>
@@ -26,7 +26,12 @@
 }
     </style>
     <body>
-        <form method="post" action=<c:url value="controller.do"/>
+        
+        <form method="post" action="controller.do" >
+            <input class="button" style="font-size:20px" type="submit" name="knop" value="logout"/> 
+        </form>
+
+         <form method="post" action="controller.do">
         <h1>Welkom </h1>
         <p>Wat wil je doen </p>
         <input class="button" style="font-size:20px" type="submit" name="knop" value="overzicht"/> 
