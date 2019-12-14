@@ -53,41 +53,17 @@ public class controller extends HttpServlet {
             throws ServletException, IOException {
         HttpSession sessie = request.getSession();
         String knop = request.getParameter("knop");
-/*
-        if(knop.equals("login"))
-        {
-            username = request.getParameter("username");
-            sessie.setAttribute("username", username);
-            switch (username) {
-                case "student":
-                {
-                    sessie.setAttribute("groep", "student");
-                    RequestDispatcher view = request.getRequestDispatcher("overzicht.jsp");
-                    view.forward(request, response);
-                    break;
-                }
-                case "docent":
-                {
-                    sessie.setAttribute("groep", "docent");
-                    RequestDispatcher view = request.getRequestDispatcher("overzicht.jsp");
-                    view.forward(request, response);
-                    break;
-                }
-                case "extern":
-                {
-                    sessie.setAttribute("groep", "extern");
-                    RequestDispatcher view = request.getRequestDispatcher("overzicht.jsp");
-                    view.forward(request, response);
-                    break;
-                }
-                default:
-                {
-                    RequestDispatcher view = request.getRequestDispatcher("login.jsp");
-                    view.forward(request, response);
-                    break;
-                }
-            }
-        }*/
+
+        if (request.isUserInRole("Docent")){
+            sessie.setAttribute("groep","Docent");
+        }
+        else if (request.isUserInRole("Student")){
+            sessie.setAttribute("groep","Student");
+        }
+        else{
+            sessie.setAttribute("groep","Extern");
+        }
+        
         switch (knop) {
             case "overzicht":
                 {
@@ -100,6 +76,7 @@ public class controller extends HttpServlet {
                 {
                     sessie.removeAttribute("groep");
                     response.sendRedirect("controller.do" );
+                    break;
                 }
             case "Details":
                 {
@@ -123,7 +100,7 @@ public class controller extends HttpServlet {
                     String opleiding = request.getParameter("opleiding");
                     BigDecimal aankoopprijs = new BigDecimal(request.getParameter("aankoopprijs"));
                     BigDecimal huurprijs = new BigDecimal(request.getParameter("huurprijs"));
-                    String omschrijving = request.getParameter("opleiding");
+                    String omschrijving = request.getParameter("omschrijving");
                     db.addMachine(naam, locatie, opleiding, aankoopprijs, huurprijs, omschrijving);
                     init();     //om de machinelijst in de applicatie opnieuw in te laden
                     RequestDispatcher view = request.getRequestDispatcher("overzicht.jsp");
@@ -132,22 +109,6 @@ public class controller extends HttpServlet {
                 }
             default:
                 break;
-        }
-        
-        if (request.isUserInRole("Docent")){
-            sessie.setAttribute("groep","Docent");
-            RequestDispatcher view = request.getRequestDispatcher ("overzicht.jsp");
-            view.forward(request, response);
-        }
-        else if (request.isUserInRole("Student")){
-            sessie.setAttribute("groep","Student");
-            RequestDispatcher view = request.getRequestDispatcher ("overzicht.jsp");
-            view.forward(request, response);
-        }
-        else{
-            sessie.setAttribute("groep","Extern");
-            RequestDispatcher view = request.getRequestDispatcher ("overzicht.jsp");
-            view.forward(request, response);
         }
     }
 

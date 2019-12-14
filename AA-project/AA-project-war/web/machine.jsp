@@ -26,7 +26,7 @@
                     <tr><td>Opleiding:</td><td><input type="text" name="opleiding"/></td></tr>
                     <tr><td>Aankoopprijs:</td><td><input type="text" name="aankoopprijs"/></td></tr>
                     <tr><td>Huurprijs(1u):</td><td><input type="text" name="huurprijs"/></td></tr>
-                    <tr><td>Omschrijving:</td><td><textarea cols="40" rows="6" name="omschrijving" form="nieuwemachine"></textarea></td></tr>
+                    <tr><td>Omschrijving:</td><td><textarea cols="40" rows="6" name="omschrijving"></textarea></td></tr>
                     <tr><td></td><td><input type="submit" name="knop" value="Machine toevoegen"/></td></tr>
                 </table>
             </form>
