@@ -1,5 +1,5 @@
 <%-- 
-    Document   : overzicht
+    Document   : details
     Created on : 13-nov-2019, 16:10:49
     Author     : Max
 --%>

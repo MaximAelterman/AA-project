@@ -42,9 +42,6 @@ public class controller extends HttpServlet {
     public void init()
     {
         List <Machines> ma = db.getMachines();
-        System.out.println("********* TEST ***********");
-        System.out.println(ma.get(0).getMnaam());
-        System.out.println(ma.get(1).getMnaam());
         getServletContext().setAttribute("machines", ma);
     }
 
@@ -53,7 +50,7 @@ public class controller extends HttpServlet {
             throws ServletException, IOException {
         HttpSession sessie = request.getSession();
         String knop = request.getParameter("knop");
-
+        
         if (request.isUserInRole("Docent")){
             sessie.setAttribute("groep","Docent");
         }
@@ -66,47 +63,77 @@ public class controller extends HttpServlet {
         
         switch (knop) {
             case "overzicht":
-                {
-                    RequestDispatcher view = request.getRequestDispatcher("overzicht.jsp");
-                    view.forward (request, response);
-                    break;
-                }
-                
+            {
+                String gebruiker = request.getRemoteUser();
+                String opleiding = db.getOpleiding(gebruiker);
+                sessie.setAttribute("gebruiker", gebruiker);
+                sessie.setAttribute("opleiding", opleiding);
+                RequestDispatcher view = request.getRequestDispatcher("overzicht.jsp");
+                view.forward (request, response);
+                break;
+            }
             case "logout":
-                {
-                    sessie.removeAttribute("groep");
-                    response.sendRedirect("controller.do" );
-                    break;
-                }
+            {
+                sessie.removeAttribute("groep");
+                sessie.removeAttribute("gebruiker");
+                sessie.removeAttribute("opleiding");
+                response.sendRedirect("controller.do" );
+                break;
+            }
             case "Details":
-                {
-                    BigDecimal mnr = new BigDecimal(request.getParameter("details"));
-                    Machines machine = db.getMachine(mnr);
-                    sessie.setAttribute("machine", machine);
-                    RequestDispatcher view = request.getRequestDispatcher("details.jsp");
-                    view.forward(request, response);
-                    break;
-                }
+            {
+                BigDecimal mnr = new BigDecimal(request.getParameter("details"));
+                Machines machine = db.getMachine(mnr);
+                sessie.setAttribute("machine", machine);
+                RequestDispatcher view = request.getRequestDispatcher("details.jsp");
+                view.forward(request, response);
+                break;
+            }
             case "Nieuwe machine":
-                {
-                    RequestDispatcher view = request.getRequestDispatcher("machine.jsp");
-                    view.forward(request, response);
-                    break;
-                }
+            {
+                RequestDispatcher view = request.getRequestDispatcher("machine.jsp");
+                view.forward(request, response);
+                break;
+            }
             case "Machine toevoegen":
-                {
-                    String naam = request.getParameter("naam");
-                    String locatie = request.getParameter("locatie");
-                    String opleiding = request.getParameter("opleiding");
-                    BigDecimal aankoopprijs = new BigDecimal(request.getParameter("aankoopprijs"));
-                    BigDecimal huurprijs = new BigDecimal(request.getParameter("huurprijs"));
-                    String omschrijving = request.getParameter("omschrijving");
-                    db.addMachine(naam, locatie, opleiding, aankoopprijs, huurprijs, omschrijving);
-                    init();     //om de machinelijst in de applicatie opnieuw in te laden
-                    RequestDispatcher view = request.getRequestDispatcher("overzicht.jsp");
-                    view.forward(request, response);
-                    break;
-                }
+            {
+                String naam = request.getParameter("naam");
+                String locatie = request.getParameter("locatie");
+                String opleiding = request.getParameter("opleiding");
+                BigDecimal aankoopprijs = new BigDecimal(request.getParameter("aankoopprijs"));
+                BigDecimal huurprijs = new BigDecimal(request.getParameter("huurprijs"));
+                String omschrijving = request.getParameter("omschrijving");
+                db.addMachine(naam, locatie, opleiding, aankoopprijs, huurprijs, omschrijving);
+                init();     //om de machinelijst in de applicatie opnieuw in te laden
+                RequestDispatcher view = request.getRequestDispatcher("overzicht.jsp");
+                view.forward(request, response);
+                break;
+            }
+            case "Wijzig":
+            {
+                BigDecimal mnr = new BigDecimal(request.getParameter("details"));
+                Machines machine = db.getMachine(mnr);
+                sessie.setAttribute("mnr", mnr);
+                sessie.setAttribute("machine", machine);
+                RequestDispatcher view = request.getRequestDispatcher("wijzig_machine.jsp");
+                view.forward(request, response);
+                break;
+            }
+            case "Wijzigingen opslaan":
+            {
+                BigDecimal mnr = (BigDecimal)sessie.getAttribute("mnr");
+                String naam = request.getParameter("naam");
+                String locatie = request.getParameter("locatie");
+                String opleiding = request.getParameter("opleiding");
+                BigDecimal aankoopprijs = new BigDecimal(request.getParameter("aankoopprijs"));
+                BigDecimal huurprijs = new BigDecimal(request.getParameter("huurprijs"));
+                String omschrijving = request.getParameter("omschrijving");
+                db.wijzigMachine(mnr, naam, locatie, opleiding, aankoopprijs, huurprijs, omschrijving);
+                init();     //om de machinelijst in de applicatie opnieuw in te laden
+                RequestDispatcher view = request.getRequestDispatcher("overzicht.jsp");
+                view.forward(request, response);
+                break;
+            }
             default:
                 break;
         }

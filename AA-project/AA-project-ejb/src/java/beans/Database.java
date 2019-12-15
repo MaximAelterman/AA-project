@@ -32,6 +32,14 @@ public class Database implements DatabaseLocal {
     }
     
     @Override
+    public String getOpleiding(String naam)
+    {
+        Query query = em.createQuery("SELECT g.opleiding from Gebruikers g WHERE g.gebruikersnaam = :naam");
+        query.setParameter("naam", naam);
+        return (String)query.getSingleResult();
+    }
+    
+    @Override
     public Object getGebruiker(String l){
         Gebruikers gebr = (Gebruikers) em.createNamedQuery("Gebruikers.findByLogin").setParameter("login",l).getSingleResult();
         return gebr;
@@ -60,6 +68,24 @@ public class Database implements DatabaseLocal {
             return mnr;
         } catch (Exception eee) {
             out.println("Fout bij aanmaken van machine: " + eee);
+            return new BigDecimal(0);
+        }
+    }
+    
+    @Override
+    public BigDecimal wijzigMachine(BigDecimal mnr, String naam, String locatie, String opleiding, BigDecimal aankoopprijs, BigDecimal huurprijs, String omschrijving){
+        try {
+            Machines machine = em.find(Machines.class, mnr);
+            machine.setMnaam(naam);
+            machine.setMloc(locatie);
+            machine.setOpleiding(opleiding);
+            machine.setAankoopprijs(aankoopprijs.doubleValue());
+            machine.setHuurprijs(huurprijs.doubleValue());
+            machine.setOmschrijving(omschrijving);
+            em.persist(machine);
+            return mnr;
+        } catch (Exception eee) {
+            out.println("Fout bij wijzigen van machine: " + eee);
             return new BigDecimal(0);
         }
     }

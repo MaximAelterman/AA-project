@@ -15,7 +15,7 @@
     </head>
     <body>
         <h1>Overzichtspagina</h1>
-        <h2>Welkom! U bent ingelogd als ${sessionScope.groep}.</h2>
+        <h2>Welkom ${sessionScope.gebruiker}! U bent ingelogd als ${sessionScope.groep}.</h2>
         
         <div class="container">
             <c:if test="${sessionScope.groep == 'Docent'}">
@@ -27,7 +27,10 @@
                 <tr><th>Naam</th><th>Locatie</th><th>Opleiding</th><th></th></tr>
                 <c:forEach var="machine" items="${applicationScope.machines}">
                     <form method= "post" action=<c:url value="/controller.do"/>>
-                    <tr><td>${machine.mnaam}</td><td>${machine.mloc}</td><td>${machine.opleiding}</td><td><input type="submit" name="knop" value="Details"/><input type="hidden" name="details" value="${machine.mnr}"/></td></tr>
+                        <tr>
+                            <td>${machine.mnaam}</td><td>${machine.mloc}</td><td>${machine.opleiding}</td><td><input type="submit" name="knop" value="Details"/><input type="hidden" name="details" value="${machine.mnr}"/></td>
+                            <c:if test="${sessionScope.groep == 'Docent' && machine.opleiding == sessionScope.opleiding}"><td><input type="submit" name="knop" value="Wijzig"/></td></c:if>
+                        </tr>
                     </form>
                 </c:forEach>
             </table>
