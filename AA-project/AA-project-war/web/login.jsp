@@ -10,23 +10,13 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Login Page</title>
     </head>
     <style>
         p {
             font-size: 18px
         }
-        .button {
-            background-color: blue;
-            border: none;
-            color: white;
-            padding: 15px 32px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 22px;
-            margin: 4px 2px;
-        }
+       
     </style>
     <body>
     <h1>Login:</h1>
