@@ -11,7 +11,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Overzicht Page</title>
     </head>
     <body>
         <h1>Overzichtspagina</h1>
@@ -26,7 +26,7 @@
             <table>
                 <tr><th>Naam</th><th>Locatie</th><th>Opleiding</th><th></th></tr>
                 <c:forEach var="machine" items="${applicationScope.machines}">
-                    <form method= "post" action=<c:url value="/controller.do"/>>
+                    <form method= "post" action="controller.do"/>
                         <tr>
                             <td>${machine.mnaam}</td><td>${machine.mloc}</td><td>${machine.opleiding}</td><td><input type="submit" name="knop" value="Details"/><input type="hidden" name="details" value="${machine.mnr}"/></td>
                             <c:if test="${sessionScope.groep == 'Docent' && machine.opleiding == sessionScope.opleiding}"><td><input type="submit" name="knop" value="Wijzig"/></td></c:if>

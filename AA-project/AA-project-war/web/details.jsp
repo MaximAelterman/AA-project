@@ -25,5 +25,9 @@
             <tr><td>Aankoopprijs:</td><td>€${sessionScope.machine.aankoopprijs}</td></tr>
             <tr><td>Huurprijs(1u):</td><td>€${sessionScope.machine.huurprijs}</td></tr>
         </table>
+        </br>
+        <form method="post" action="controller.do" >
+            <input style="font-size:20px" type="submit" name="knop" value="overzicht"/> 
+        </form>
     </body>
 </html>

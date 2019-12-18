@@ -24,6 +24,9 @@ public class Database implements DatabaseLocal {
     // "Insert Code > Add Business Method")
     @PersistenceContext private EntityManager em;
     
+        public Database(){}
+
+    
     @Override
     public List<Machines> getMachines() {
         List<Machines> machinelijst;

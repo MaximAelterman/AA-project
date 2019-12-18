@@ -38,13 +38,7 @@ public class controller extends HttpServlet {
     
     @EJB private DatabaseLocal db;
 
-    @Override
-    public void init()
-    {
-        List <Machines> ma = db.getMachines();
-        getServletContext().setAttribute("machines", ma);
-    }
-
+   
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -70,13 +64,14 @@ public class controller extends HttpServlet {
                 sessie.setAttribute("opleiding", opleiding);
                 RequestDispatcher view = request.getRequestDispatcher("overzicht.jsp");
                 view.forward (request, response);
-                break;
+               break;
             }
             case "logout":
             {
-                sessie.removeAttribute("groep");
+               /* sessie.removeAttribute("groep");
                 sessie.removeAttribute("gebruiker");
-                sessie.removeAttribute("opleiding");
+                sessie.removeAttribute("opleiding");*/
+                sessie.invalidate();
                 response.sendRedirect("controller.do" );
                 break;
             }
@@ -93,7 +88,7 @@ public class controller extends HttpServlet {
             {
                 RequestDispatcher view = request.getRequestDispatcher("machine.jsp");
                 view.forward(request, response);
-                break;
+                //break;
             }
             case "Machine toevoegen":
             {
@@ -117,7 +112,7 @@ public class controller extends HttpServlet {
                 sessie.setAttribute("machine", machine);
                 RequestDispatcher view = request.getRequestDispatcher("wijzig_machine.jsp");
                 view.forward(request, response);
-                break;
+                // break;
             }
             case "Wijzigingen opslaan":
             {
@@ -177,5 +172,12 @@ public class controller extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+    
+     @Override
+    public void init()
+    {
+        List <Machines> ma = db.getMachines();
+        getServletContext().setAttribute("machines", ma);
+    }
     
 }
