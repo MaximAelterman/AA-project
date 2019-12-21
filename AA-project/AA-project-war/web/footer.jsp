@@ -15,6 +15,9 @@
     <body>
         <div class="btn-group">
             <form method="post" action="controller.do">
+                <input class="button" style="font-size:20px" type="submit" name="knop" value="overzicht"/> 
+            </form>
+            <form method="post" action="controller.do">
                 <input class="button" style="font-size:20px" type="submit" name="knop" value="logout"/> 
             </form>
         </div>
