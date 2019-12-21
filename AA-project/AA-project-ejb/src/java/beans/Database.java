@@ -8,6 +8,8 @@ package beans;
 import static java.lang.System.out;
 import java.math.BigDecimal;
 import java.util.List;
+import javax.ejb.Local;
+import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -18,7 +20,9 @@ import javax.persistence.Query;
  * @author Max
  */
 @Stateless
-public class Database implements DatabaseLocal {
+@Local ({DatabaseLocal.class})
+@Remote ({DatabaseRemote.class})
+public class Database implements DatabaseLocal, DatabaseRemote {
     
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
