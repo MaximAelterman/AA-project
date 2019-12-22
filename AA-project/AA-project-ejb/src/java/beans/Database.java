@@ -34,7 +34,7 @@ public class Database implements DatabaseLocal, DatabaseRemote {
     @Override
     public List<Machines> getMachines() {
         List<Machines> machinelijst;
-        machinelijst = (List<Machines>) em.createQuery("SELECT m FROM Machines m").getResultList();
+        machinelijst = (List<Machines>) em.createNamedQuery("Machines.findAll").getResultList();
         return machinelijst;
     }
     
@@ -54,7 +54,7 @@ public class Database implements DatabaseLocal, DatabaseRemote {
     
     @Override
     public Machines getMachine(BigDecimal mnr){
-        Query query = em.createQuery("SELECT m FROM Machines m WHERE m.mnr = :mnr");
+        Query query = em.createQuery("SELECT m FROM Machines m WHERE m.mnr = :mnr").setParameter("mnr",mnr);
         query.setParameter("mnr", mnr);
         return (Machines)query.getSingleResult();
     }

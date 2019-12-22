@@ -90,7 +90,7 @@ public class controller extends HttpServlet {
             {
                 RequestDispatcher view = request.getRequestDispatcher("machine.jsp");
                 view.forward(request, response);
-                //break;
+                break;
             }
             case "Machine toevoegen":
             {
@@ -118,7 +118,7 @@ public class controller extends HttpServlet {
             }
             case "Wijzigingen opslaan":
             {
-                BigDecimal mnr = (BigDecimal)sessie.getAttribute("mnr");
+                BigDecimal mnr = (BigDecimal)sessie.getAttribute("details");
                 String naam = request.getParameter("naam");
                 String locatie = request.getParameter("locatie");
                 String opleiding = request.getParameter("opleiding");

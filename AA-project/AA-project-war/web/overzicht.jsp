@@ -42,7 +42,7 @@
                             <td>${machine.mloc}</td>
                             <td>${machine.opleiding}</td>
                             <td>${machine.omschrijving}</td>
-                            <input type="hidden" name="mnr" value="${machine.mnr}"/>
+                            <input type="hidden" name="details" value="${machine.mnr}"/>
                             <td>
                                 <c:if test="${groep != 'extern'}">
                                 <input type="submit" name="knop" value="Details"/>

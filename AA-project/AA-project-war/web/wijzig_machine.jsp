@@ -21,12 +21,13 @@
             <c:if test="${sessionScope.groep == 'Docent'}">
             <form method="post" name="wijzigmachine" action=<c:url value="/controller.do"/>>
                 <table>
-                    <tr><td>Naam</td><td><input type="text" name="naam" value="${sessionScope.machine.getMnaam()}"/></td></tr>
-                    <tr><td>Locatie:</td><td><input type="text" name="locatie" value="${sessionScope.machine.getMloc()}"/></td></tr>
-                    <tr><td>Opleiding:</td><td><input type="text" name="opleiding" value="${sessionScope.machine.getOpleiding()}"/></td></tr>
-                    <tr><td>Aankoopprijs:</td><td><input type="text" name="aankoopprijs" value="${sessionScope.machine.getAankoopprijs()}"/></td></tr>
-                    <tr><td>Huurprijs(1u):</td><td><input type="text" name="huurprijs" value="${sessionScope.machine.getHuurprijs()}"/></td></tr>
-                    <tr><td>Omschrijving:</td><td><textarea cols="40" rows="6" name="omschrijving">${sessionScope.machine.getOmschrijving()}</textarea></td></tr>
+                    <tr><td>Naam</td><td><input type="text" name="naam" value="${machine.mnaam}"/></td></tr>
+                    <tr><td>Serienummer</td><td><input type="text" name="aankoopprijs" value="${machine.serienr}"/></td></tr>
+                    <tr><td>Locatie:</td><td><input type="text" name="locatie" value="${machine.mloc}"/></td></tr>
+                    <tr><td>Opleiding:</td><td><input type="text" name="opleiding" value="${machine.opleiding}"/></td></tr>
+                    <tr><td>Aankoopprijs:</td><td><input type="text" name="aankoopprijs" value="${machine.aankoopprijs}"/></td></tr>
+                    <tr><td>Huurprijs(1u):</td><td><input type="text" name="huurprijs" value="${machine.huurprijs}"/></td></tr>
+                    <tr><td>Omschrijving:</td><td><textarea cols="40" rows="6" name="omschrijving">${machine.omschrijving}</textarea></td></tr>
                     <tr><td></td><td><input type="submit" name="knop" value="Wijzigingen opslaan"/></td></tr>
                 </table>
             </form>

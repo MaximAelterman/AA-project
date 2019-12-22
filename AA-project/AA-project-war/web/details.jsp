@@ -19,11 +19,12 @@
         <p>${sessionScope.machine.omschrijving}</p>
         <h2>Details</h2>
         <table>
-            <tr><td>Machinenummer:</td><td>${sessionScope.machine.mnr}</td></tr>
-            <tr><td>Locatie:</td><td>${sessionScope.machine.mloc}</td></tr>
-            <tr><td>Opleiding:</td><td>${sessionScope.machine.opleiding}</td></tr>
-            <tr><td>Aankoopprijs:</td><td>€${sessionScope.machine.aankoopprijs}</td></tr>
-            <tr><td>Huurprijs(1u):</td><td>€${sessionScope.machine.huurprijs}</td></tr>
+            <tr><td>Machinenummer:</td><td>${machine.mnr}</td></tr>
+            <tr><td>Serienummer: </td><td>${machine.serienr}</td></tr>
+            <tr><td>Locatie:</td><td>${machine.mloc}</td></tr>
+            <tr><td>Opleiding:</td><td>${machine.opleiding}</td></tr>
+            <tr><td>Aankoopprijs:</td><td>€ ${machine.aankoopprijs}</td></tr>
+            <tr><td>Huurprijs(1u):</td><td>€ ${machine.huurprijs}</td></tr>
         </table>
         </br>
         <form method="post" action="controller.do" >
