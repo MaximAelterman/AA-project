@@ -27,7 +27,7 @@
         </table>
         </br>
         <form method="post" action="controller.do" >
-            <input style="font-size:20px" type="submit" name="knop" value="overzicht"/> 
+            <input style="font-size:20px" type="submit" name="knop" value="Overzicht"/> 
         </form>
     </body>
 </html>

@@ -19,6 +19,8 @@
             <web-resource-name>contraint</web-resource-name>
             <description/>
             <url-pattern>/*</url-pattern>
+            <http-method>GET</http-method>
+            <http-method>POST</http-method>
         </web-resource-collection>
         <auth-constraint>
             <description/>

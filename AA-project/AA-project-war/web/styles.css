@@ -1,7 +1,7 @@
 p {
-    font-size: 18px
+    font-size: 14px
 }
-.button{
+/*.button{
     display:inline-block;
     padding:0.3em 1.2em;
     margin:0 0.3em 0.3em 0;
@@ -16,14 +16,14 @@ p {
 }
 
 .btn-group {
-  padding: 10px 24px; /* Some padding */
-  cursor: pointer; /* Pointer/hand icon */
-  float: left; /* Float the buttons side by side */
+    padding: 10px 24px;  Some padding 
+    cursor: pointer;  Pointer/hand icon 
+    float: left;  Float the buttons side by side 
 }
 
-/* Clear floats (clearfix hack) */
+ Clear floats (clearfix hack) 
 .btn-group:after {
-  content: "";
-  clear: both;
-  display: table;
-}
+    content: "";
+    clear: both;
+    display: table;
+}*/

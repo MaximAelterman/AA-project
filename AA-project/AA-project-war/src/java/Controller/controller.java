@@ -56,7 +56,7 @@ public class controller extends HttpServlet {
         }
         
         switch (knop) {
-            case "overzicht":
+            case "Overzicht":
             {
                 String gebruiker = request.getRemoteUser();
                 String opleiding = db.getOpleiding(gebruiker);
@@ -66,13 +66,15 @@ public class controller extends HttpServlet {
                 view.forward (request, response);
                break;
             }
-            case "logout":
+            case "Logout":
             {
                /* sessie.removeAttribute("groep");
                 sessie.removeAttribute("gebruiker");
                 sessie.removeAttribute("opleiding");*/
                 sessie.invalidate();
-                response.sendRedirect("controller.do" );
+                RequestDispatcher view = request.getRequestDispatcher("login.jsp");
+                view.forward (request, response);
+                //response.sendRedirect("controller.do" );
                 break;
             }
             case "Details":
@@ -112,7 +114,7 @@ public class controller extends HttpServlet {
                 sessie.setAttribute("machine", machine);
                 RequestDispatcher view = request.getRequestDispatcher("wijzig_machine.jsp");
                 view.forward(request, response);
-                // break;
+                break;
             }
             case "Wijzigingen opslaan":
             {
@@ -128,6 +130,11 @@ public class controller extends HttpServlet {
                 RequestDispatcher view = request.getRequestDispatcher("overzicht.jsp");
                 view.forward(request, response);
                 break;
+            }
+            case "Reserveer":
+            {
+              RequestDispatcher view = request.getRequestDispatcher ("reservatie.jsp" );
+              view.forward (request,response );   
             }
             default:
                 break;

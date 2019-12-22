@@ -7,6 +7,7 @@ package beans;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -38,6 +39,11 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Machines.findByAankoopprijs", query = "SELECT m FROM Machines m WHERE m.aankoopprijs = :aankoopprijs")
     , @NamedQuery(name = "Machines.findByHuurprijs", query = "SELECT m FROM Machines m WHERE m.huurprijs = :huurprijs")})
 public class Machines implements Serializable {
+
+    @Column(name = "SERIENR")
+    private BigInteger serienr;
+    @OneToMany(mappedBy = "mnr")
+    private Collection<Momenten> momentenCollection;
 
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
@@ -160,6 +166,23 @@ public class Machines implements Serializable {
     @Override
     public String toString() {
         return "bean_pkg.Machines[ mnr=" + mnr + " ]";
+    }
+
+    public BigInteger getSerienr() {
+        return serienr;
+    }
+
+    public void setSerienr(BigInteger serienr) {
+        this.serienr = serienr;
+    }
+
+    @XmlTransient
+    public Collection<Momenten> getMomentenCollection() {
+        return momentenCollection;
+    }
+
+    public void setMomentenCollection(Collection<Momenten> momentenCollection) {
+        this.momentenCollection = momentenCollection;
     }
     
 }

@@ -13,17 +13,17 @@
         <title>Index Page</title>
     </head>
     <style>
-.button {
-    background-color: blue;
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-}
+    .button {
+        background-color: blue;
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+    }
     </style>
     <body>
         
@@ -34,7 +34,7 @@
          <form method="post" action="controller.do">
         <h1>Welkom </h1>
         <p>Wat wil je doen </p>
-        <input class="button" style="font-size:20px" type="submit" name="knop" value="overzicht"/> 
+        <input class="button" style="font-size:20px" type="submit" name="knop" value="Overzicht"/> 
         </form>
     </body>
 </html>

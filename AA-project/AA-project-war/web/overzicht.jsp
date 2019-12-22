@@ -13,6 +13,11 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Overzicht Page</title>
     </head>
+    <style>
+        td,th {
+            padding: 6px;
+        }
+    </style>
     <body>
         <h1>Overzichtspagina</h1>
         <h2>Welkom ${sessionScope.gebruiker}! U bent ingelogd als ${sessionScope.groep}.</h2>
@@ -24,12 +29,31 @@
                 </form>
             </c:if>
             <table>
-                <tr><th>Naam</th><th>Locatie</th><th>Opleiding</th><th></th></tr>
+                <tr>
+                    <th>Naam</th>
+                    <th>Locatie</th>
+                    <th>Opleiding</th>
+                    <th>Korte omschrijving</th>
+                </tr>
                 <c:forEach var="machine" items="${applicationScope.machines}">
                     <form method= "post" action="controller.do"/>
                         <tr>
-                            <td>${machine.mnaam}</td><td>${machine.mloc}</td><td>${machine.opleiding}</td><td><input type="submit" name="knop" value="Details"/><input type="hidden" name="details" value="${machine.mnr}"/></td>
-                            <c:if test="${sessionScope.groep == 'Docent' && machine.opleiding == sessionScope.opleiding}"><td><input type="submit" name="knop" value="Wijzig"/></td></c:if>
+                            <td>${machine.mnaam}</td>
+                            <td>${machine.mloc}</td>
+                            <td>${machine.opleiding}</td>
+                            <td>${machine.omschrijving}</td>
+                            <input type="hidden" name="mnr" value="${machine.mnr}"/>
+                            <td>
+                                <c:if test="${groep != 'extern'}">
+                                <input type="submit" name="knop" value="Details"/>
+                                </c:if>
+                            </td>
+                            <c:if test="${sessionScope.groep == 'Docent' && machine.opleiding == sessionScope.opleiding}">
+                                <td><input type="submit" name="knop" value="Wijzig"/></td>
+                            </c:if>
+                            <td>
+                                <input type="submit" name="knop" value="Reserveer"/>
+                            </td>
                         </tr>
                     </form>
                 </c:forEach>
