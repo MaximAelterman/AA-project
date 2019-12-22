@@ -40,6 +40,12 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Machines.findByHuurprijs", query = "SELECT m FROM Machines m WHERE m.huurprijs = :huurprijs")})
 public class Machines implements Serializable {
 
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "AANKOOPPRIJS")
+    private Double aankoopprijs;
+    @Column(name = "HUURPRIJS")
+    private Double huurprijs;
+
     @Column(name = "SERIENR")
     private BigInteger serienr;
     @OneToMany(mappedBy = "mnr")
@@ -64,10 +70,6 @@ public class Machines implements Serializable {
     @Size(max = 20)
     @Column(name = "OPLEIDING")
     private String opleiding;
-    @Column(name = "AANKOOPPRIJS")
-    private Double aankoopprijs;
-    @Column(name = "HUURPRIJS")
-    private Double huurprijs;
     @OneToMany(mappedBy = "mnr")
     private Collection<Reservaties> reservatiesCollection;
 
@@ -118,21 +120,6 @@ public class Machines implements Serializable {
         this.opleiding = opleiding;
     }
 
-    public Double getAankoopprijs() {
-        return aankoopprijs;
-    }
-
-    public void setAankoopprijs(Double aankoopprijs) {
-        this.aankoopprijs = aankoopprijs;
-    }
-
-    public Double getHuurprijs() {
-        return huurprijs;
-    }
-
-    public void setHuurprijs(Double huurprijs) {
-        this.huurprijs = huurprijs;
-    }
 
     @XmlTransient
     public Collection<Reservaties> getReservatiesCollection() {
@@ -183,6 +170,22 @@ public class Machines implements Serializable {
 
     public void setMomentenCollection(Collection<Momenten> momentenCollection) {
         this.momentenCollection = momentenCollection;
+    }
+
+    public Double getAankoopprijs() {
+        return aankoopprijs;
+    }
+
+    public void setAankoopprijs(Double aankoopprijs) {
+        this.aankoopprijs = aankoopprijs;
+    }
+
+    public Double getHuurprijs() {
+        return huurprijs;
+    }
+
+    public void setHuurprijs(Double huurprijs) {
+        this.huurprijs = huurprijs;
     }
     
 }

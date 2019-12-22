@@ -125,6 +125,7 @@ public class controller extends HttpServlet {
                 BigDecimal aankoopprijs = new BigDecimal(request.getParameter("aankoopprijs"));
                 BigDecimal huurprijs = new BigDecimal(request.getParameter("huurprijs"));
                 String omschrijving = request.getParameter("omschrijving");
+                
                 db.wijzigMachine(mnr, naam, locatie, opleiding, aankoopprijs, huurprijs, omschrijving);
                 init();     //om de machinelijst in de applicatie opnieuw in te laden
                 RequestDispatcher view = request.getRequestDispatcher("overzicht.jsp");

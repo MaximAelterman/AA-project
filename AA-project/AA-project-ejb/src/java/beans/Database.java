@@ -82,7 +82,7 @@ public class Database implements DatabaseLocal, DatabaseRemote {
     @Override
     public BigDecimal wijzigMachine(BigDecimal mnr, String naam, String locatie, String opleiding, BigDecimal aankoopprijs, BigDecimal huurprijs, String omschrijving){
         try {
-            Machines machine = em.find(Machines.class, mnr);
+           Machines machine = em.find(Machines.class, mnr);
             machine.setMnaam(naam);
             machine.setMloc(locatie);
             machine.setOpleiding(opleiding);
