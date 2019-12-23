@@ -18,12 +18,13 @@
         <h2>Gelieve volgende gegevens op te geven.</h2>
         
         <div class="container">
-            <c:if test="${sessionScope.groep == 'Docent'}">
+            <c:if test="${groep == 'Docent'}">
             <form method="post" name="nieuwemachine" action=<c:url value="/controller.do"/>>
                 <table>
                     <tr><td>Naam</td><td><input type="text" name="naam"/></td></tr>
+                    <tr><td>Serienummer</td><td><input type="text" name="serienr" /></td></tr>
                     <tr><td>Locatie:</td><td><input type="text" name="locatie"/></td></tr>
-                    <tr><td>Opleiding:</td><td><input type="text" name="opleiding"/></td></tr>
+                    <tr><td>Opleiding:</td><td><input type="text" name="opleiding" value = "${opleiding}" readonly/></td></tr>
                     <tr><td>Aankoopprijs:</td><td><input type="text" name="aankoopprijs"/></td></tr>
                     <tr><td>Huurprijs(1u):</td><td><input type="text" name="huurprijs"/></td></tr>
                     <tr><td>Omschrijving:</td><td><textarea cols="40" rows="6" name="omschrijving"></textarea></td></tr>

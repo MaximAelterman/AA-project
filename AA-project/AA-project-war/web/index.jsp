@@ -27,14 +27,10 @@
     </style>
     <body>
         
-        <form method="post" action="controller.do" >
-            <input class="button" style="font-size:20px" type="submit" name="knop" value="logout"/> 
-        </form>
-
-         <form method="post" action="controller.do">
-        <h1>Welkom </h1>
-        <p>Wat wil je doen </p>
-        <input class="button" style="font-size:20px" type="submit" name="knop" value="Overzicht"/> 
+        <form method="post" action="controller.do">
+            <h1>Welkom </h1>
+            <p>Wat wil je doen </p>
+            <input class="button" style="font-size:20px" type="submit" name="knop" value="Overzicht"/> 
         </form>
     </body>
 </html>

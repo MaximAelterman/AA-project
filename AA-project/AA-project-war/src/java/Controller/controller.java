@@ -7,6 +7,7 @@
 package Controller;
 import beans.Machines;
 import beans.DatabaseLocal;
+import beans.*;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.*;
@@ -38,7 +39,6 @@ public class controller extends HttpServlet {
     
     @EJB private DatabaseLocal db;
 
-   
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -58,6 +58,7 @@ public class controller extends HttpServlet {
         switch (knop) {
             case "Overzicht":
             {
+                init();
                 String gebruiker = request.getRemoteUser();
                 String opleiding = db.getOpleiding(gebruiker);
                 sessie.setAttribute("gebruiker", gebruiker);
@@ -97,10 +98,12 @@ public class controller extends HttpServlet {
                 String naam = request.getParameter("naam");
                 String locatie = request.getParameter("locatie");
                 String opleiding = request.getParameter("opleiding");
-                BigDecimal aankoopprijs = new BigDecimal(request.getParameter("aankoopprijs"));
-                BigDecimal huurprijs = new BigDecimal(request.getParameter("huurprijs"));
+                String serienr = request.getParameter("serienr");
+
+                String aankoopprijs = request.getParameter("aankoopprijs");
+                String huurprijs = request.getParameter("huurprijs");
                 String omschrijving = request.getParameter("omschrijving");
-                db.addMachine(naam, locatie, opleiding, aankoopprijs, huurprijs, omschrijving);
+                db.addMachine(naam,serienr, locatie, opleiding, aankoopprijs, huurprijs, omschrijving);
                 init();     //om de machinelijst in de applicatie opnieuw in te laden
                 RequestDispatcher view = request.getRequestDispatcher("overzicht.jsp");
                 view.forward(request, response);
@@ -122,20 +125,52 @@ public class controller extends HttpServlet {
                 String naam = request.getParameter("naam");
                 String locatie = request.getParameter("locatie");
                 String opleiding = request.getParameter("opleiding");
-                BigDecimal aankoopprijs = new BigDecimal(request.getParameter("aankoopprijs"));
-                BigDecimal huurprijs = new BigDecimal(request.getParameter("huurprijs"));
+                String serienr = request.getParameter("serienr");
+                //BigDecimal aankoopprijs = new BigDecimal(request.getParameter("aankoopprijs"));
+                //BigDecimal huurprijs = new BigDecimal(request.getParameter("huurprijs"));
+                String aankoopprijs = request.getParameter("aankoopprijs");
+                String huurprijs = request.getParameter("huurprijs");
                 String omschrijving = request.getParameter("omschrijving");
                 
-                db.wijzigMachine(mnr, naam, locatie, opleiding, aankoopprijs, huurprijs, omschrijving);
+                db.wijzigMachine(sessie.getAttribute("machine"), naam, serienr, locatie, opleiding, aankoopprijs, huurprijs, omschrijving);
                 init();     //om de machinelijst in de applicatie opnieuw in te laden
                 RequestDispatcher view = request.getRequestDispatcher("overzicht.jsp");
                 view.forward(request, response);
                 break;
             }
+            
+            case "Moment toevoegen":
+            {
+                String start = request.getParameter("start");
+                String duurtijd = request.getParameter("duur");
+                String datum = request.getParameter("datum");
+                db.addMoment(sessie.getAttribute("machine"), start, duurtijd, datum);
+                
+                RequestDispatcher view = request.getRequestDispatcher("details.jsp");
+                view.forward (request,response);
+                break;
+            }
+            
             case "Reserveer":
             {
-              RequestDispatcher view = request.getRequestDispatcher ("reservatie.jsp" );
-              view.forward (request,response );   
+                BigDecimal mnr = new BigDecimal(request.getParameter("details"));
+                if (request.getParameter("mnr")!=null)
+                { 
+                    Machines mach = (Machines) db.getMachine(mnr);
+                    sessie.setAttribute("mnr",mach);
+                }
+                
+                Machines mach = (Machines)sessie.getAttribute("mnr");
+                List <Momenten> momres = new ArrayList<>();
+                List <Momenten> momvrij = db.getMachineMomenten(mnr);   // ophalen van machine momenten
+                List<String> user = new ArrayList<>();
+
+                
+                Machines machine = db.getMachine(mnr);
+                sessie.setAttribute("machine", machine);
+
+                RequestDispatcher view = request.getRequestDispatcher ("reservatie.jsp" );
+                view.forward (request,response );   
             }
             default:
                 break;

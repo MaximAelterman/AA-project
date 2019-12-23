@@ -42,9 +42,9 @@ public class Machines implements Serializable {
 
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "AANKOOPPRIJS")
-    private Double aankoopprijs;
+    private BigInteger aankoopprijs;
     @Column(name = "HUURPRIJS")
-    private Double huurprijs;
+    private BigInteger huurprijs;
 
     @Column(name = "SERIENR")
     private BigInteger serienr;
@@ -172,19 +172,19 @@ public class Machines implements Serializable {
         this.momentenCollection = momentenCollection;
     }
 
-    public Double getAankoopprijs() {
+    public BigInteger getAankoopprijs() {
         return aankoopprijs;
     }
 
-    public void setAankoopprijs(Double aankoopprijs) {
+    public void setAankoopprijs(BigInteger aankoopprijs) {
         this.aankoopprijs = aankoopprijs;
     }
 
-    public Double getHuurprijs() {
+    public BigInteger getHuurprijs() {
         return huurprijs;
     }
 
-    public void setHuurprijs(Double huurprijs) {
+    public void setHuurprijs(BigInteger huurprijs) {
         this.huurprijs = huurprijs;
     }
     

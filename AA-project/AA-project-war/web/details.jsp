@@ -14,9 +14,9 @@
         <title>Detailpagina</title>
     </head>
     <body>
-        <h1>Detailpagina van ${sessionScope.machine.mnaam}</h1>
+        <h1>Detailpagina van ${machine.mnaam}</h1>
         <h2>Omschrijving</h2>
-        <p>${sessionScope.machine.omschrijving}</p>
+        <p>${machine.omschrijving}</p>
         <h2>Details</h2>
         <table>
             <tr><td>Machinenummer:</td><td>${machine.mnr}</td></tr>
@@ -27,8 +27,26 @@
             <tr><td>Huurprijs(1u):</td><td>€ ${machine.huurprijs}</td></tr>
         </table>
         </br>
-        <form method="post" action="controller.do" >
-            <input style="font-size:20px" type="submit" name="knop" value="Overzicht"/> 
+        <form method="post" action=<c:url value="/controller.do"/>>
+            <input type="hidden" name="details" value="${machine.mnr}"/>
+
+            <c:if test="${groep == 'Docent' && machine.opleiding == opleiding}">
+                <input type="submit" name="knop" value="Wijzig"/></td>
+            </c:if>
+            <input type="submit" name="knop" value="Reserveer"/>
+            
+            <input style="font-size:20px" type="submit" name="knop" value="Overzicht"/>
+            <c:if test="${groep == 'Docent'}">
+                <br/>
+                <h2> Moment toevoegen:</h2>
+                <p>
+                 Startuur:<input type="text" name="start" value="" />
+                 Duurtijd<input type="text" name="duur" value="" />
+                 datum:<input type="date" name="datum" value="" />
+                 <input type="submit" name="btn"  value="Moment toevoegen" />
+                </p>
+            </c:if>   
+            
         </form>
     </body>
 </html>

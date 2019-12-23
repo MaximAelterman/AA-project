@@ -36,7 +36,7 @@
                     <th>Korte omschrijving</th>
                 </tr>
                 <c:forEach var="machine" items="${applicationScope.machines}">
-                    <form method= "post" action="controller.do"/>
+                    <form method= "post" action=<c:url value="/controller.do"/> >
                         <tr>
                             <td>${machine.mnaam}</td>
                             <td>${machine.mloc}</td>

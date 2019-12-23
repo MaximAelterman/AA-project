@@ -21,8 +21,8 @@ create table Machines (
 	mloc varchar2(20),
 	opleiding varchar2(20),
         serienr int,        -- machine serienummer
-	aankoopprijs float,
-	huurprijs float
+	aankoopprijs int,
+	huurprijs int
 );
 
 create table Momenten (
