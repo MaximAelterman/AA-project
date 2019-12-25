@@ -7,6 +7,7 @@ package beans;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -39,6 +40,15 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Machines.findByHuurprijs", query = "SELECT m FROM Machines m WHERE m.huurprijs = :huurprijs")})
 public class Machines implements Serializable {
 
+    @Column(name = "SERIENR")
+    private BigInteger serienr;
+    @Column(name = "AANKOOPPRIJS")
+    private BigInteger aankoopprijs;
+    @Column(name = "HUURPRIJS")
+    private BigInteger huurprijs;
+    @OneToMany(mappedBy = "mnr")
+    private Collection<Momenten> momentenCollection;
+
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
@@ -58,10 +68,6 @@ public class Machines implements Serializable {
     @Size(max = 20)
     @Column(name = "OPLEIDING")
     private String opleiding;
-    @Column(name = "AANKOOPPRIJS")
-    private Double aankoopprijs;
-    @Column(name = "HUURPRIJS")
-    private Double huurprijs;
     @OneToMany(mappedBy = "mnr")
     private Collection<Reservaties> reservatiesCollection;
 
@@ -112,21 +118,6 @@ public class Machines implements Serializable {
         this.opleiding = opleiding;
     }
 
-    public Double getAankoopprijs() {
-        return aankoopprijs;
-    }
-
-    public void setAankoopprijs(Double aankoopprijs) {
-        this.aankoopprijs = aankoopprijs;
-    }
-
-    public Double getHuurprijs() {
-        return huurprijs;
-    }
-
-    public void setHuurprijs(Double huurprijs) {
-        this.huurprijs = huurprijs;
-    }
 
     @XmlTransient
     public Collection<Reservaties> getReservatiesCollection() {
@@ -160,6 +151,39 @@ public class Machines implements Serializable {
     @Override
     public String toString() {
         return "bean_pkg.Machines[ mnr=" + mnr + " ]";
+    }
+
+    public BigInteger getSerienr() {
+        return serienr;
+    }
+
+    public void setSerienr(BigInteger serienr) {
+        this.serienr = serienr;
+    }
+
+    public BigInteger getAankoopprijs() {
+        return aankoopprijs;
+    }
+
+    public void setAankoopprijs(BigInteger aankoopprijs) {
+        this.aankoopprijs = aankoopprijs;
+    }
+
+    public BigInteger getHuurprijs() {
+        return huurprijs;
+    }
+
+    public void setHuurprijs(BigInteger huurprijs) {
+        this.huurprijs = huurprijs;
+    }
+
+    @XmlTransient
+    public Collection<Momenten> getMomentenCollection() {
+        return momentenCollection;
+    }
+
+    public void setMomentenCollection(Collection<Momenten> momentenCollection) {
+        this.momentenCollection = momentenCollection;
     }
     
 }

@@ -15,7 +15,7 @@ create table Groepen (
 );
 
 create table Machines (
-	mnr int primary key,
+	mnr integer primary key,
 	mnaam varchar2(20),
 	omschrijving varchar2(150),
 	mloc varchar2(20),
@@ -35,7 +35,7 @@ create table Momenten (
 );
 
 create table Reservaties (
-	rnr int primary key,
+	rnr integer primary key,
 	gebruikersnaam varchar2(20),
         momid integer,
         FOREIGN KEY (momid) REFERENCES Momenten(momid) ON DELETE CASCADE,

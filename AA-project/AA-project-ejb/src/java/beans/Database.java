@@ -23,8 +23,8 @@ import javax.persistence.Query;
  */
 @Stateless
 @Local ({DatabaseLocal.class})
-// @Remote ({DatabaseRemote.class})
-public class Database implements DatabaseLocal {
+@Remote ({DatabaseRemote.class})
+public class Database implements DatabaseLocal, DatabaseRemote {
     
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")

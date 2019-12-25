@@ -38,6 +38,10 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Reservaties.findByDuur", query = "SELECT r FROM Reservaties r WHERE r.duur = :duur")})
 public class Reservaties implements Serializable {
 
+    @JoinColumn(name = "MOMID", referencedColumnName = "MOMID")
+    @ManyToOne
+    private Momenten momid;
+
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
@@ -137,6 +141,14 @@ public class Reservaties implements Serializable {
     @Override
     public String toString() {
         return "bean_pkg.Reservaties[ rnr=" + rnr + " ]";
+    }
+
+    public Momenten getMomid() {
+        return momid;
+    }
+
+    public void setMomid(Momenten momid) {
+        this.momid = momid;
     }
     
 }
