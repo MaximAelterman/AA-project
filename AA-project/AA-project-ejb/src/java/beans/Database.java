@@ -55,11 +55,16 @@ public class Database implements DatabaseLocal {
     }
     
 
-    @Override
+  /*  @Override
     public Machines getMachine(BigDecimal mnr){
         Query query = em.createQuery("SELECT m FROM Machines m WHERE m.mnr = :mnr").setParameter("mnr",mnr);
         query.setParameter("mnr", mnr);
         return (Machines)query.getSingleResult();
+    */
+    @Override
+    public Machines getMachine(BigDecimal mnr){
+        Object machine = em.createQuery("SELECT m FROM Machines m WHERE m.mnr = :mnr").setParameter("mnr",mnr).getSingleResult();
+        return (Machines) machine;
     }
     
     @Override

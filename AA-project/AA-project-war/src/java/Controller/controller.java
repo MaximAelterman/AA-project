@@ -45,6 +45,10 @@ public class controller extends HttpServlet {
         HttpSession sessie = request.getSession();
         String knop = request.getParameter("knop");
         
+        String gebruiker = request.getRemoteUser();
+        String opleid = db.getOpleiding(gebruiker);
+        sessie.setAttribute("gebruiker", gebruiker);
+        sessie.setAttribute("opleiding", opleid);
         if (request.isUserInRole("Docent")){
             sessie.setAttribute("groep","Docent");
         }
@@ -58,11 +62,8 @@ public class controller extends HttpServlet {
         switch (knop) {
             case "Overzicht":
             {
-                init();
-                String gebruiker = request.getRemoteUser();
-                String opleiding = db.getOpleiding(gebruiker);
-                sessie.setAttribute("gebruiker", gebruiker);
-                sessie.setAttribute("opleiding", opleiding);
+                HerladenMachines();
+               
                 RequestDispatcher view = request.getRequestDispatcher("overzicht.jsp");
                 view.forward (request, response);
                break;
@@ -103,8 +104,13 @@ public class controller extends HttpServlet {
                 String aankoopprijs = request.getParameter("aankoopprijs");
                 String huurprijs = request.getParameter("huurprijs");
                 String omschrijving = request.getParameter("omschrijving");
-                db.addMachine(naam,serienr, locatie, opleiding, aankoopprijs, huurprijs, omschrijving);
-                init();     //om de machinelijst in de applicatie opnieuw in te laden
+                
+                BigDecimal nr =  db.addMachine(naam,serienr, locatie, opleiding, aankoopprijs, huurprijs, omschrijving);
+                
+                HerladenMachines();                                         //om de machinelijst in de applicatie opnieuw in te laden
+                
+                Machines machine = db.getMachine(nr);
+                sessie.setAttribute("machine", machine);
                 RequestDispatcher view = request.getRequestDispatcher("overzicht.jsp");
                 view.forward(request, response);
                 break;
@@ -113,7 +119,7 @@ public class controller extends HttpServlet {
             {
                 BigDecimal mnr = new BigDecimal(request.getParameter("details"));
                 Machines machine = db.getMachine(mnr);
-                sessie.setAttribute("mnr", mnr);
+                // sessie.setAttribute("mnr", mnr);
                 sessie.setAttribute("machine", machine);
                 RequestDispatcher view = request.getRequestDispatcher("wijzig_machine.jsp");
                 view.forward(request, response);
@@ -122,6 +128,8 @@ public class controller extends HttpServlet {
             case "Wijzigingen opslaan":
             {
                 BigDecimal mnr = (BigDecimal)sessie.getAttribute("details");
+                Machines machine = db.getMachine(mnr);
+
                 String naam = request.getParameter("naam");
                 String locatie = request.getParameter("locatie");
                 String opleiding = request.getParameter("opleiding");
@@ -132,8 +140,13 @@ public class controller extends HttpServlet {
                 String huurprijs = request.getParameter("huurprijs");
                 String omschrijving = request.getParameter("omschrijving");
                 
-                db.wijzigMachine(sessie.getAttribute("machine"), naam, serienr, locatie, opleiding, aankoopprijs, huurprijs, omschrijving);
-                init();     //om de machinelijst in de applicatie opnieuw in te laden
+                db.wijzigMachine(machine, naam, serienr, locatie, opleiding, aankoopprijs, huurprijs, omschrijving);
+               
+                HerladenMachines();     //om de machinelijst in de applicatie opnieuw in te laden
+                
+                machine = db.getMachine(mnr);
+                sessie.setAttribute("machine", machine);
+                
                 RequestDispatcher view = request.getRequestDispatcher("overzicht.jsp");
                 view.forward(request, response);
                 break;
@@ -160,7 +173,7 @@ public class controller extends HttpServlet {
                     sessie.setAttribute("mnr",mach);
                 }
                 
-                Machines mach = (Machines)sessie.getAttribute("mnr");
+                Machines mach = (Machines)sessie.getAttribute("machine");
                 List <Momenten> momres = new ArrayList<>();
                 List <Momenten> momvrij = db.getMachineMomenten(mnr);   // ophalen van machine momenten
                 List<String> user = new ArrayList<>();
@@ -216,11 +229,16 @@ public class controller extends HttpServlet {
         return "Short description";
     }// </editor-fold>
     
-     @Override
+    @Override
     public void init()
     {
-        List <Machines> ma = db.getMachines();
-        getServletContext().setAttribute("machines", ma);
+        HerladenMachines();
     }
     
+    public void HerladenMachines()
+    {
+        List<Machines> ma= db.getMachines();
+        getServletContext().setAttribute("machines",ma);
+    }
 }
+

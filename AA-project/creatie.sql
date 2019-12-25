@@ -20,16 +20,16 @@ create table Machines (
 	omschrijving varchar2(150),
 	mloc varchar2(20),
 	opleiding varchar2(20),
-        serienr int,        -- machine serienummer
-	aankoopprijs int,
-	huurprijs int
+        serienr integer,        -- machine serienummer
+	aankoopprijs integer,
+	huurprijs integer
 );
 
 create table Momenten (
 	momid  integer primary key,
 	mnr   integer,
 	strt  integer,
-        duur int,
+        duur integer,
 	datum date,
         FOREIGN KEY (mnr) REFERENCES Machines(mnr) ON DELETE CASCADE
 );
