@@ -6,6 +6,8 @@
 package client;
 
 import beans.Machines;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 import javax.swing.JTable;
 import javax.swing.table.TableColumn;
@@ -20,7 +22,6 @@ public class Gui extends javax.swing.JFrame {
      * Creates new form Gui
      */
     private List<Machines> machines;
-    private JTable machinetbl;
     private String[] colNames = {"Mnr", "Naam", "Locatie"};
     private Object[][] rowData;
     
@@ -37,10 +38,23 @@ public class Gui extends javax.swing.JFrame {
             i++;
         }
         
-        //machinetbl = new JTable(rowData, colNames);
-       
-        
         initComponents();
+        
+        Machinetbl.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 1) {
+                    JTable target = (JTable)e.getSource();
+                    int row = target.getSelectedRow();
+                    //int column = target.getSelectedColumn();
+                    
+                    Machines machine = machines.get(row);
+                    System.out.println(machine.getMnaam());
+                }
+            }
+        });
+        
+        
         
 
     }
@@ -55,14 +69,25 @@ public class Gui extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        Machinetbl = new javax.swing.JTable();
+        Details = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        Machinetbl.setModel(new javax.swing.table.DefaultTableModel(
             rowData, colNames
         ));
-        jScrollPane1.setViewportView(jTable1);
+        Machinetbl.setColumnSelectionAllowed(true);
+        Machinetbl.setRowSelectionAllowed(true);
+        Machinetbl.setDefaultEditor(Object.class, null);
+        jScrollPane1.setViewportView(Machinetbl);
+
+        Details.setText("Details");
+        Details.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DetailsActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -70,7 +95,11 @@ public class Gui extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(Details)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -78,12 +107,20 @@ public class Gui extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(41, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(Details)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void DetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DetailsActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_DetailsActionPerformed
+
+    
     /**
      * @param args the command line arguments
      */
@@ -120,7 +157,8 @@ public class Gui extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Details;
+    private javax.swing.JTable Machinetbl;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }

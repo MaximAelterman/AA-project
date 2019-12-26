@@ -109,8 +109,8 @@ public class controller extends HttpServlet {
                 
                 HerladenMachines();                                         //om de machinelijst in de applicatie opnieuw in te laden
                 
-                Machines machine = db.getMachine(nr);
-                sessie.setAttribute("machine", machine);
+                //Machines machine = db.getMachine(nr);
+                //sessie.setAttribute("machine", machine);
                 RequestDispatcher view = request.getRequestDispatcher("overzicht.jsp");
                 view.forward(request, response);
                 break;
@@ -127,7 +127,7 @@ public class controller extends HttpServlet {
             }
             case "Wijzigingen opslaan":
             {
-                BigDecimal mnr = (BigDecimal)sessie.getAttribute("details");
+                BigDecimal mnr = new BigDecimal(request.getParameter("mnr"));
                 Machines machine = db.getMachine(mnr);
 
                 String naam = request.getParameter("naam");
@@ -144,8 +144,8 @@ public class controller extends HttpServlet {
                
                 HerladenMachines();     //om de machinelijst in de applicatie opnieuw in te laden
                 
-                machine = db.getMachine(mnr);
-                sessie.setAttribute("machine", machine);
+                //machine = db.getMachine(mnr);
+                //sessie.setAttribute("machine", machine);
                 
                 RequestDispatcher view = request.getRequestDispatcher("overzicht.jsp");
                 view.forward(request, response);
