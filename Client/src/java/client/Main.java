@@ -26,8 +26,7 @@ public class Main {
         // TODO code application logic here
         InitialContext ic = new InitialContext();
         db = (DatabaseRemote) ic.lookup(DatabaseRemote.class.getName());
-        List<Machines> machines = db.getMachines();
-        Gui gui = new Gui(machines);
+        Gui gui = new Gui(db);
         gui.setVisible(true);
         
     }

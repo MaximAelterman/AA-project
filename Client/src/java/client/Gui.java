@@ -5,10 +5,13 @@
  */
 package client;
 
+import beans.DatabaseRemote;
 import beans.Machines;
+import beans.Momenten;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
+import javax.swing.JFrame;
 import javax.swing.JTable;
 import javax.swing.table.TableColumn;
 
@@ -21,12 +24,18 @@ public class Gui extends javax.swing.JFrame {
     /**
      * Creates new form Gui
      */
+    private DatabaseRemote db;
     private List<Machines> machines;
+    private List<Momenten> momenten;
     private String[] colNames = {"Mnr", "Naam", "Locatie"};
     private Object[][] rowData;
     
-    public Gui(List<Machines> machines) {
-        this.machines = machines;
+    private String[] colNames2 = {"MomID", "Starttijd", "Duur"};
+    private Object[][] rowData2;
+    
+    public Gui(DatabaseRemote db) {
+        this.db = db;
+        this.machines = db.getMachines();
         rowData = new Object[machines.size()][3];
 
                 //init tabel
@@ -40,6 +49,11 @@ public class Gui extends javax.swing.JFrame {
         
         initComponents();
         
+            //init detail paneel
+        detailPanel.setSize(this.getSize());
+        this.setContentPane(overzichtPanel);
+        
+        
         Machinetbl.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -48,8 +62,10 @@ public class Gui extends javax.swing.JFrame {
                     int row = target.getSelectedRow();
                     //int column = target.getSelectedColumn();
                     
+                    
                     Machines machine = machines.get(row);
                     System.out.println(machine.getMnaam());
+                    toonMachine(machine);
                 }
             }
         });
@@ -68,19 +84,18 @@ public class Gui extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        overzichtPanel = new javax.swing.JPanel();
+        Details = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         Machinetbl = new javax.swing.JTable();
-        Details = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        detailPanel = new javax.swing.JPanel();
+        terugKnop = new javax.swing.JButton();
+        naamLabel = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        Machinetbl.setModel(new javax.swing.table.DefaultTableModel(
-            rowData, colNames
-        ));
-        Machinetbl.setColumnSelectionAllowed(true);
-        Machinetbl.setRowSelectionAllowed(true);
-        Machinetbl.setDefaultEditor(Object.class, null);
-        jScrollPane1.setViewportView(Machinetbl);
 
         Details.setText("Details");
         Details.addActionListener(new java.awt.event.ActionListener() {
@@ -89,27 +104,110 @@ public class Gui extends javax.swing.JFrame {
             }
         });
 
+        Machinetbl.setModel(new javax.swing.table.DefaultTableModel(
+            rowData, colNames
+        ));
+        Machinetbl.setColumnSelectionAllowed(true);
+        Machinetbl.setDefaultEditor(Object.class, null);
+        jScrollPane1.setViewportView(Machinetbl);
+
+        jLabel1.setText("Overzicht van de machines");
+
+        javax.swing.GroupLayout overzichtPanelLayout = new javax.swing.GroupLayout(overzichtPanel);
+        overzichtPanel.setLayout(overzichtPanelLayout);
+        overzichtPanelLayout.setHorizontalGroup(
+            overzichtPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(overzichtPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(overzichtPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(overzichtPanelLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(Details))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 497, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        overzichtPanelLayout.setVerticalGroup(
+            overzichtPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, overzichtPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addGap(11, 11, 11)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(Details)
+                .addContainerGap())
+        );
+
+        terugKnop.setText("Terug");
+        terugKnop.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                terugKnopActionPerformed(evt);
+            }
+        });
+
+        naamLabel.setText("jLabel1");
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(jTable1);
+
+        javax.swing.GroupLayout detailPanelLayout = new javax.swing.GroupLayout(detailPanel);
+        detailPanel.setLayout(detailPanelLayout);
+        detailPanelLayout.setHorizontalGroup(
+            detailPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(detailPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(detailPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(naamLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, detailPanelLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(terugKnop))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 468, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        detailPanelLayout.setVerticalGroup(
+            detailPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(detailPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(naamLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, Short.MAX_VALUE)
+                .addComponent(terugKnop)
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(Details)))
-                .addContainerGap())
+                .addComponent(overzichtPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(150, 150, 150)
+                    .addComponent(detailPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(150, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(Details)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(overzichtPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(105, 105, 105)
+                    .addComponent(detailPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(45, Short.MAX_VALUE)))
         );
 
         pack();
@@ -120,6 +218,30 @@ public class Gui extends javax.swing.JFrame {
         
     }//GEN-LAST:event_DetailsActionPerformed
 
+    private void terugKnopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_terugKnopActionPerformed
+        // TODO add your handling code here:
+        this.setContentPane(overzichtPanel);
+        this.repaint();
+        this.revalidate();
+    }//GEN-LAST:event_terugKnopActionPerformed
+
+    private void toonMachine(Machines m){
+        this.momenten = this.db.getMomenten();
+        rowData2 = new Object[momenten.size()][3];
+       
+        int i = 0;
+        for(Momenten moment : this.momenten){
+            rowData2[i][0] = moment.getMomid();
+            rowData2[i][1] = moment.getStrt();
+            rowData2[i][2] = moment.getDuur();
+            i++;
+        }
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(rowData2, colNames2));
+        this.setContentPane(detailPanel);
+        naamLabel.setText(m.getMnaam());
+        this.repaint();
+        this.revalidate();
+    }
     
     /**
      * @param args the command line arguments
@@ -159,6 +281,13 @@ public class Gui extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Details;
     private javax.swing.JTable Machinetbl;
+    private javax.swing.JPanel detailPanel;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JLabel naamLabel;
+    private javax.swing.JPanel overzichtPanel;
+    private javax.swing.JButton terugKnop;
     // End of variables declaration//GEN-END:variables
 }
