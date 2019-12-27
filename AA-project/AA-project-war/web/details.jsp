@@ -13,6 +13,12 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Detailpagina</title>
     </head>
+    <style>
+        td,th {
+            padding: 6px;
+        }
+        table,tr,td, th { border: 1px solid black;}
+    </style>
     <body>
         <h1>Detailpagina van ${machine.mnaam}</h1>
         <h2>Omschrijving</h2>
@@ -36,6 +42,11 @@
             <input type="submit" name="knop" value="Reserveer"/>
             
             <input style="font-size:20px" type="submit" name="knop" value="Overzicht"/>
+            
+            <c:if test="${groep == 'Docent'}">
+                 <input type="submit" name="knop"  value="MachineMoment" />
+            </c:if>
+                 
             <c:if test="${groep == 'Docent'}">
                 <br/>
                 <h2> Moment toevoegen:</h2>
@@ -43,10 +54,29 @@
                  Startuur:<input type="text" name="start" value="" />
                  Duurtijd<input type="text" name="duur" value="" />
                  datum:<input type="date" name="datum" value="" />
-                 <input type="submit" name="btn"  value="Moment toevoegen" />
+                 <input type="submit" name="knop"  value="Moment toevoegen" />
                 </p>
             </c:if>   
-            
         </form>
+         <c:if test="${test == 'oke'}">
+             <h2> Machine Momenten:</h2>
+             <br/>
+             <table>
+             <tr>
+                <th>moment ID</th>
+                <th>start tijd</th>
+                <th>duur</th>
+                <th>datum</th>
+            </tr>
+                <c:forEach var="moment" items="${machinemom}">
+                <tr>
+                    <td>${moment.momid}</td>
+                    <td>${moment.strt}</td>
+                    <td>${moment.duur}</td>
+                    <td>${moment.datum}</td>
+                </tr>
+                </c:forEach>
+             </table>
+            </c:if>  
     </body>
 </html>

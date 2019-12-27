@@ -100,7 +100,6 @@ public class controller extends HttpServlet {
                 String locatie = request.getParameter("locatie");
                 String opleiding = request.getParameter("opleiding");
                 String serienr = request.getParameter("serienr");
-
                 String aankoopprijs = request.getParameter("aankoopprijs");
                 String huurprijs = request.getParameter("huurprijs");
                 String omschrijving = request.getParameter("omschrijving");
@@ -143,13 +142,21 @@ public class controller extends HttpServlet {
                 db.wijzigMachine(machine, naam, serienr, locatie, opleiding, aankoopprijs, huurprijs, omschrijving);
                
                 HerladenMachines();     //om de machinelijst in de applicatie opnieuw in te laden
-                
-                //machine = db.getMachine(mnr);
-                //sessie.setAttribute("machine", machine);
-                
+                          
                 RequestDispatcher view = request.getRequestDispatcher("overzicht.jsp");
                 view.forward(request, response);
                 break;
+            }
+            
+            case "MachineMoment":
+            {
+                BigDecimal mnr = new BigDecimal(request.getParameter("details"));
+                Machines machine = db.getMachine(mnr);
+                List<Momenten> machinemom = db.getMachineMomenten(machine);   // ophalen van machine momenten
+                sessie.setAttribute("machinemom",machinemom);
+                sessie.setAttribute("test", "oke");
+                RequestDispatcher view = request.getRequestDispatcher ("details.jsp" );
+                view.forward (request,response );
             }
             
             case "Moment toevoegen":
@@ -174,9 +181,23 @@ public class controller extends HttpServlet {
                 }
                 
                 Machines mach = (Machines)sessie.getAttribute("machine");
-                List <Momenten> momres = new ArrayList<>();
-                List <Momenten> momvrij = db.getMachineMomenten(mnr);   // ophalen van machine momenten
+                List <Momenten> ResMom = new ArrayList<>();
+                List <Momenten> VrijMom = db.getMachineMomenten(mach);   // ophalen van machine momenten
                 List<String> user = new ArrayList<>();
+                
+                for(int i=0;i<VrijMom.size();){
+                        if(!db.isVrij(VrijMom.get(i))) {
+                            ResMom.add(VrijMom.get(i));
+                            user.add(db.getUserResMomid(VrijMom.get(i)));
+                            VrijMom.remove(i);  
+                        } 
+                        else{
+                            i++;
+                        }
+                    }
+                    sessie.setAttribute("vrijmom",VrijMom);
+                    sessie.setAttribute("resmom",ResMom);
+                    sessie.setAttribute("user",user);
 
                 
                 Machines machine = db.getMachine(mnr);

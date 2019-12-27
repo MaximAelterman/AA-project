@@ -19,7 +19,7 @@ import javax.persistence.Query;
 
 /**
  *
- * @author Max
+ * @author Max & Jeroen 
  */
 @Stateless
 @Local ({DatabaseLocal.class})
@@ -32,12 +32,14 @@ public class Database implements DatabaseLocal, DatabaseRemote {
     
     public Database(){}
 
+    // functie voor ophalen van de gegevens van de ingelogde gebruiker    
     @Override
     public Object getGebruiker(String l){
         Gebruikers gebr = (Gebruikers) em.createNamedQuery("Gebruikers.findByLogin").setParameter("login",l).getSingleResult();
         return gebr;
     }
-    
+
+    // functie voor ophalen van de opleiding v/d gebruiker    
     @Override
     public String getOpleiding(String naam)
     {
@@ -46,6 +48,7 @@ public class Database implements DatabaseLocal, DatabaseRemote {
         return (String)query.getSingleResult();
     }
   
+    // functie voor ophalen alle machines    
     @Override
     public List getMachines() {
         // List<Machines> machinelijst;
@@ -53,25 +56,29 @@ public class Database implements DatabaseLocal, DatabaseRemote {
         List machinelijst  = em.createNamedQuery("Machines.findAll").getResultList();
         return machinelijst;
     }
-    
+
+    // functie voor ophalen machine met bepaalde mnr    
     @Override
     public Machines getMachine(BigDecimal mnr){
         Object machine = em.createQuery("SELECT m FROM Machines m WHERE m.mnr = :mnr").setParameter("mnr",mnr).getSingleResult();
         return (Machines) machine;
     }
-    
+
+    // functie voor ophalen van de de momenten van een bepaalde machine met mnr
     @Override
-    public List getMachineMomenten(BigDecimal mnr){
+    public List getMachineMomenten(Object mnr){
         List<Momenten> mom = (List<Momenten>) em.createQuery("SELECT m FROM Momenten m WHERE m.mnr = :mnr").setParameter("mnr",mnr).getResultList();
         return mom;
     }
     
+    // functie voor ophalen van alle reservaties momenten    
     @Override
     public List getMomenten(){
         List mom = em.createNamedQuery("Momenten.findAll").getResultList();
         return mom;
     }
     
+    // functie voor het toevoegen van een nieuw machine
     @Override
     public BigDecimal addMachine(String naam, String serienr, String locatie, String opleiding, String aankoopprijs, String huurprijs, String omschrijving){
         try {
@@ -92,6 +99,8 @@ public class Database implements DatabaseLocal, DatabaseRemote {
             return new BigDecimal(0);
         }
     }
+    
+    // functie voor het toevoegen van een (reservatie) moment
     @Override
     public void addMoment(Object mnr, String start, String duurtijd, String datum){
         int nr;
@@ -113,7 +122,8 @@ public class Database implements DatabaseLocal, DatabaseRemote {
        moment.setDatum(Date.valueOf(datum));
        em.persist(moment);
     }
-    
+
+    // functie voor het aanpassen van een bestaande machine 
     @Override
     public void wijzigMachine(Object mnr, String naam, String serienr, String locatie, String opleiding, String aankoopprijs, String huurprijs, String omschrijving){
         try {
@@ -134,12 +144,15 @@ public class Database implements DatabaseLocal, DatabaseRemote {
         }
     }
 
+    // functie voor het aanpassen van een bestaande machine    
     @Override
     public List getReservaties(int m){
-        List<Reservaties> res= em.createQuery("SELECT r FROM Reservaties").getResultList();
+        List res= em.createQuery("SELECT r FROM Reservaties").getResultList();
         return res;
     }
+
     
+    // functie voor ophalen van het volgende machine nr. wordt gebruikt in Addmachine    
     @Override
     public BigDecimal volgendMnr() {
         BigDecimal laatsteMnr;
@@ -154,5 +167,19 @@ public class Database implements DatabaseLocal, DatabaseRemote {
             return volgendeMnr;
         }
     }
+
     
+    
+   @Override
+    public String getUserResMomid(Object momid) {
+        Object res = em.createQuery("SELECT r.gebruikersnaam.gebruikersnaam FROM Reservaties r WHERE r.momid = :momid").setParameter("momid",momid).getSingleResult();
+        return (String)res;
+    }
+
+    // functie voor het controleren om een moment vrij is. of het moment reeds gebruikt is voor een reservatie
+    @Override
+    public boolean isVrij(Object momid){
+        List res = em.createQuery("SELECT r FROM Reservaties r WHERE r.momid = :momid").setParameter("momid",momid).getResultList();
+        return (res.isEmpty()) ;
+    }  
 }

@@ -35,7 +35,7 @@
                     <th>Opleiding</th>
                     <th>Korte omschrijving</th>
                 </tr>
-                <c:forEach var="machine" items="${applicationScope.machines}">
+                <c:forEach var="machine" items="${machines}">
                     <form method= "post" action=<c:url value="/controller.do"/> >
                         <tr>
                             <td>${machine.mnaam}</td>
