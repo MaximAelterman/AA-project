@@ -7,8 +7,6 @@ package beans;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,29 +16,20 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Max
+ * @author r0631
  */
 @Entity
 @Table(name = "RESERVATIES")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Reservaties.findAll", query = "SELECT r FROM Reservaties r")
-    , @NamedQuery(name = "Reservaties.findByRnr", query = "SELECT r FROM Reservaties r WHERE r.rnr = :rnr")
-    , @NamedQuery(name = "Reservaties.findByDatum", query = "SELECT r FROM Reservaties r WHERE r.datum = :datum")
-    , @NamedQuery(name = "Reservaties.findByUur", query = "SELECT r FROM Reservaties r WHERE r.uur = :uur")
-    , @NamedQuery(name = "Reservaties.findByDuur", query = "SELECT r FROM Reservaties r WHERE r.duur = :duur")})
+    , @NamedQuery(name = "Reservaties.findByRnr", query = "SELECT r FROM Reservaties r WHERE r.rnr = :rnr")})
 public class Reservaties implements Serializable {
-
-    @JoinColumn(name = "MOMID", referencedColumnName = "MOMID")
-    @ManyToOne
-    private Momenten momid;
 
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
@@ -49,19 +38,12 @@ public class Reservaties implements Serializable {
     @NotNull
     @Column(name = "RNR")
     private BigDecimal rnr;
-    @Column(name = "DATUM")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date datum;
-    @Column(name = "UUR")
-    private BigInteger uur;
-    @Column(name = "DUUR")
-    private BigInteger duur;
     @JoinColumn(name = "GEBRUIKERSNAAM", referencedColumnName = "GEBRUIKERSNAAM")
     @ManyToOne
     private Gebruikers gebruikersnaam;
-    @JoinColumn(name = "MNR", referencedColumnName = "MNR")
+    @JoinColumn(name = "MOMID", referencedColumnName = "MOMID")
     @ManyToOne
-    private Machines mnr;
+    private Momenten momid;
 
     public Reservaties() {
     }
@@ -78,30 +60,6 @@ public class Reservaties implements Serializable {
         this.rnr = rnr;
     }
 
-    public Date getDatum() {
-        return datum;
-    }
-
-    public void setDatum(Date datum) {
-        this.datum = datum;
-    }
-
-    public BigInteger getUur() {
-        return uur;
-    }
-
-    public void setUur(BigInteger uur) {
-        this.uur = uur;
-    }
-
-    public BigInteger getDuur() {
-        return duur;
-    }
-
-    public void setDuur(BigInteger duur) {
-        this.duur = duur;
-    }
-
     public Gebruikers getGebruikersnaam() {
         return gebruikersnaam;
     }
@@ -110,12 +68,12 @@ public class Reservaties implements Serializable {
         this.gebruikersnaam = gebruikersnaam;
     }
 
-    public Machines getMnr() {
-        return mnr;
+    public Momenten getMomid() {
+        return momid;
     }
 
-    public void setMnr(Machines mnr) {
-        this.mnr = mnr;
+    public void setMomid(Momenten momid) {
+        this.momid = momid;
     }
 
     @Override
@@ -140,15 +98,7 @@ public class Reservaties implements Serializable {
 
     @Override
     public String toString() {
-        return "bean_pkg.Reservaties[ rnr=" + rnr + " ]";
-    }
-
-    public Momenten getMomid() {
-        return momid;
-    }
-
-    public void setMomid(Momenten momid) {
-        this.momid = momid;
+        return "beans.Reservaties[ rnr=" + rnr + " ]";
     }
     
 }

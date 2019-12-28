@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Max
+ * @author r0631
  */
 @Entity
 @Table(name = "MOMENTEN")

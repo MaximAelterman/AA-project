@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Max
+ * @author r0631
  */
 @Entity
 @Table(name = "MACHINES")
@@ -36,18 +36,10 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Machines.findByOmschrijving", query = "SELECT m FROM Machines m WHERE m.omschrijving = :omschrijving")
     , @NamedQuery(name = "Machines.findByMloc", query = "SELECT m FROM Machines m WHERE m.mloc = :mloc")
     , @NamedQuery(name = "Machines.findByOpleiding", query = "SELECT m FROM Machines m WHERE m.opleiding = :opleiding")
+    , @NamedQuery(name = "Machines.findBySerienr", query = "SELECT m FROM Machines m WHERE m.serienr = :serienr")
     , @NamedQuery(name = "Machines.findByAankoopprijs", query = "SELECT m FROM Machines m WHERE m.aankoopprijs = :aankoopprijs")
     , @NamedQuery(name = "Machines.findByHuurprijs", query = "SELECT m FROM Machines m WHERE m.huurprijs = :huurprijs")})
 public class Machines implements Serializable {
-
-    @Column(name = "SERIENR")
-    private BigInteger serienr;
-    @Column(name = "AANKOOPPRIJS")
-    private BigInteger aankoopprijs;
-    @Column(name = "HUURPRIJS")
-    private BigInteger huurprijs;
-    @OneToMany(mappedBy = "mnr")
-    private Collection<Momenten> momentenCollection;
 
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
@@ -59,7 +51,7 @@ public class Machines implements Serializable {
     @Size(max = 20)
     @Column(name = "MNAAM")
     private String mnaam;
-    @Size(max = 120)
+    @Size(max = 150)
     @Column(name = "OMSCHRIJVING")
     private String omschrijving;
     @Size(max = 20)
@@ -68,8 +60,14 @@ public class Machines implements Serializable {
     @Size(max = 20)
     @Column(name = "OPLEIDING")
     private String opleiding;
+    @Column(name = "SERIENR")
+    private BigInteger serienr;
+    @Column(name = "AANKOOPPRIJS")
+    private BigInteger aankoopprijs;
+    @Column(name = "HUURPRIJS")
+    private BigInteger huurprijs;
     @OneToMany(mappedBy = "mnr")
-    private Collection<Reservaties> reservatiesCollection;
+    private Collection<Momenten> momentenCollection;
 
     public Machines() {
     }
@@ -118,41 +116,6 @@ public class Machines implements Serializable {
         this.opleiding = opleiding;
     }
 
-
-    @XmlTransient
-    public Collection<Reservaties> getReservatiesCollection() {
-        return reservatiesCollection;
-    }
-
-    public void setReservatiesCollection(Collection<Reservaties> reservatiesCollection) {
-        this.reservatiesCollection = reservatiesCollection;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (mnr != null ? mnr.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Machines)) {
-            return false;
-        }
-        Machines other = (Machines) object;
-        if ((this.mnr == null && other.mnr != null) || (this.mnr != null && !this.mnr.equals(other.mnr))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "bean_pkg.Machines[ mnr=" + mnr + " ]";
-    }
-
     public BigInteger getSerienr() {
         return serienr;
     }
@@ -184,6 +147,31 @@ public class Machines implements Serializable {
 
     public void setMomentenCollection(Collection<Momenten> momentenCollection) {
         this.momentenCollection = momentenCollection;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (mnr != null ? mnr.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Machines)) {
+            return false;
+        }
+        Machines other = (Machines) object;
+        if ((this.mnr == null && other.mnr != null) || (this.mnr != null && !this.mnr.equals(other.mnr))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "beans.Machines[ mnr=" + mnr + " ]";
     }
     
 }

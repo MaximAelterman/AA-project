@@ -3,6 +3,10 @@
   <persistence-unit name="interfacePU" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>beans.Momenten</class>
+    <class>beans.Reservaties</class>
+    <class>beans.Gebruikers</class>
+    <class>beans.Groepen</class>
+    <class>beans.Machines</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@localhost:1521:XE"/>
       <property name="javax.persistence.jdbc.user" value="jeroen"/>

@@ -125,9 +125,10 @@ public class Database implements DatabaseLocal, DatabaseRemote {
 
     // functie voor het aanpassen van een bestaande machine 
     @Override
-    public void wijzigMachine(Object mnr, String naam, String serienr, String locatie, String opleiding, String aankoopprijs, String huurprijs, String omschrijving){
+    public void wijzigMachine(BigDecimal mnr, String naam, String serienr, String locatie, String opleiding, String aankoopprijs, String huurprijs, String omschrijving){
         try {
-            Machines machine= em.createNamedQuery("Machines.findByMnr", Machines.class).setParameter("mnr", ((Machines)mnr).getMnr()).getSingleResult();
+            Machines machine = (Machines) em.createQuery("SELECT m FROM Machines m WHERE m.mnr = :mnr").setParameter("mnr",mnr).getSingleResult();
+            //em.createNamedQuery("Machines.findByMnr", Machines.class).setParameter("mnr", ((Machines)mnr).getMnr()).getSingleResult();
             //Machines machine = em.find(Machines.class, (Machines) mnr);
             machine.setMnaam(naam);
             machine.setSerienr(new BigInteger(serienr));
@@ -144,10 +145,10 @@ public class Database implements DatabaseLocal, DatabaseRemote {
         }
     }
 
-    // functie voor het aanpassen van een bestaande machine    
+    // functie voor het ophalen van Reservaties van een bestaande machine    
     @Override
-    public List getReservaties(int m){ //best bigdecimal ipv int?
-        List res= em.createQuery("SELECT r FROM Reservaties").getResultList();
+    public List getReservaties(BigDecimal Momnr){ //best bigdecimal ipv int?
+        List res= em.createQuery("SELECT r FROM Reservaties r, Momenten m WHERE m.momid = r.momid and m.mnr =: mnr").setParameter("mnr", Momnr).getResultList();
         return res;
     }
 
@@ -168,8 +169,7 @@ public class Database implements DatabaseLocal, DatabaseRemote {
         }
     }
 
-    
-    
+    // functie voor ophalen van de gebruiker reservaties momenten
    @Override
     public String getUserResMomid(Object momid) {
         Object res = em.createQuery("SELECT r.gebruikersnaam.gebruikersnaam FROM Reservaties r WHERE r.momid = :momid").setParameter("momid",momid).getSingleResult();

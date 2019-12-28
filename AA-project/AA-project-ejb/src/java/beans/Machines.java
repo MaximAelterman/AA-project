@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Max
+ * @author r0631
  */
 @Entity
 @Table(name = "MACHINES")
@@ -36,20 +36,10 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Machines.findByOmschrijving", query = "SELECT m FROM Machines m WHERE m.omschrijving = :omschrijving")
     , @NamedQuery(name = "Machines.findByMloc", query = "SELECT m FROM Machines m WHERE m.mloc = :mloc")
     , @NamedQuery(name = "Machines.findByOpleiding", query = "SELECT m FROM Machines m WHERE m.opleiding = :opleiding")
+    , @NamedQuery(name = "Machines.findBySerienr", query = "SELECT m FROM Machines m WHERE m.serienr = :serienr")
     , @NamedQuery(name = "Machines.findByAankoopprijs", query = "SELECT m FROM Machines m WHERE m.aankoopprijs = :aankoopprijs")
     , @NamedQuery(name = "Machines.findByHuurprijs", query = "SELECT m FROM Machines m WHERE m.huurprijs = :huurprijs")})
 public class Machines implements Serializable {
-
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "AANKOOPPRIJS")
-    private BigInteger aankoopprijs;
-    @Column(name = "HUURPRIJS")
-    private BigInteger huurprijs;
-
-    @Column(name = "SERIENR")
-    private BigInteger serienr;
-    @OneToMany(mappedBy = "mnr")
-    private Collection<Momenten> momentenCollection;
 
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
@@ -61,7 +51,7 @@ public class Machines implements Serializable {
     @Size(max = 20)
     @Column(name = "MNAAM")
     private String mnaam;
-    @Size(max = 120)
+    @Size(max = 150)
     @Column(name = "OMSCHRIJVING")
     private String omschrijving;
     @Size(max = 20)
@@ -70,8 +60,14 @@ public class Machines implements Serializable {
     @Size(max = 20)
     @Column(name = "OPLEIDING")
     private String opleiding;
+    @Column(name = "SERIENR")
+    private BigInteger serienr;
+    @Column(name = "AANKOOPPRIJS")
+    private BigInteger aankoopprijs;
+    @Column(name = "HUURPRIJS")
+    private BigInteger huurprijs;
     @OneToMany(mappedBy = "mnr")
-    private Collection<Reservaties> reservatiesCollection;
+    private Collection<Momenten> momentenCollection;
 
     public Machines() {
     }
@@ -120,14 +116,37 @@ public class Machines implements Serializable {
         this.opleiding = opleiding;
     }
 
-
-    @XmlTransient
-    public Collection<Reservaties> getReservatiesCollection() {
-        return reservatiesCollection;
+    public BigInteger getSerienr() {
+        return serienr;
     }
 
-    public void setReservatiesCollection(Collection<Reservaties> reservatiesCollection) {
-        this.reservatiesCollection = reservatiesCollection;
+    public void setSerienr(BigInteger serienr) {
+        this.serienr = serienr;
+    }
+
+    public BigInteger getAankoopprijs() {
+        return aankoopprijs;
+    }
+
+    public void setAankoopprijs(BigInteger aankoopprijs) {
+        this.aankoopprijs = aankoopprijs;
+    }
+
+    public BigInteger getHuurprijs() {
+        return huurprijs;
+    }
+
+    public void setHuurprijs(BigInteger huurprijs) {
+        this.huurprijs = huurprijs;
+    }
+
+    @XmlTransient
+    public Collection<Momenten> getMomentenCollection() {
+        return momentenCollection;
+    }
+
+    public void setMomentenCollection(Collection<Momenten> momentenCollection) {
+        this.momentenCollection = momentenCollection;
     }
 
     @Override
@@ -152,40 +171,7 @@ public class Machines implements Serializable {
 
     @Override
     public String toString() {
-        return "bean_pkg.Machines[ mnr=" + mnr + " ]";
-    }
-
-    public BigInteger getSerienr() {
-        return serienr;
-    }
-
-    public void setSerienr(BigInteger serienr) {
-        this.serienr = serienr;
-    }
-
-    @XmlTransient
-    public Collection<Momenten> getMomentenCollection() {
-        return momentenCollection;
-    }
-
-    public void setMomentenCollection(Collection<Momenten> momentenCollection) {
-        this.momentenCollection = momentenCollection;
-    }
-
-    public BigInteger getAankoopprijs() {
-        return aankoopprijs;
-    }
-
-    public void setAankoopprijs(BigInteger aankoopprijs) {
-        this.aankoopprijs = aankoopprijs;
-    }
-
-    public BigInteger getHuurprijs() {
-        return huurprijs;
-    }
-
-    public void setHuurprijs(BigInteger huurprijs) {
-        this.huurprijs = huurprijs;
+        return "beans.Machines[ mnr=" + mnr + " ]";
     }
     
 }

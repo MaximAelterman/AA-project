@@ -21,7 +21,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Max
+ * @author r0631
  */
 @Entity
 @Table(name = "GROEPEN")
@@ -99,7 +99,7 @@ public class Groepen implements Serializable {
 
     @Override
     public String toString() {
-        return "bean_pkg.Groepen[ gebruikersnaam=" + gebruikersnaam + " ]";
+        return "beans.Groepen[ gebruikersnaam=" + gebruikersnaam + " ]";
     }
     
 }

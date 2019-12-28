@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Max
+ * @author r0631
  */
 @Entity
 @Table(name = "GEBRUIKERS")
@@ -124,7 +124,7 @@ public class Gebruikers implements Serializable {
 
     @Override
     public String toString() {
-        return "bean_pkg.Gebruikers[ gebruikersnaam=" + gebruikersnaam + " ]";
+        return "beans.Gebruikers[ gebruikersnaam=" + gebruikersnaam + " ]";
     }
     
 }

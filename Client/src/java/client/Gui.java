@@ -209,15 +209,21 @@ public class Gui extends javax.swing.JFrame {
     private void toonMachine(Machines m){
         //this.momenten = this.db.getMomenten();
         List<Momenten> momentenlijst = db.getMachineMomenten(m);
-        List<Reservaties> reservatielijst = db.getReservaties(m.getMnr().intValue());
+        List<Reservaties> reservatielijst = db.getReservaties(m.getMnr());
         rowData2 = new Object[reservatielijst.size()][3];
         
         int i = 0;
         for(Reservaties res : reservatielijst){
             rowData2[i][0] = res.getRnr();
+            /*
             rowData2[i][1] = res.getUur();
             rowData2[i][2] = res.getDuur();
             System.out.println("\tResID: " + res.getRnr() + "  Starttijd: " + res.getUur() + "  Duur: " + res.getDuur() + "  Gebruiker: " + res.getGebruikersnaam());
+            */
+            // hier moet de data van de Reservaties momenten opgehaald worden
+            rowData2[i][1] = res.getGebruikersnaam();
+            rowData2[i][2] = res.getMomid();
+            // System.out.println("\tResID: " + res.getRnr() + "  Starttijd: " + res.getUur() + "  Duur: " + res.getDuur() + "  Gebruiker: " + res.getGebruikersnaam());
             i++;
         }
         jTable1.setModel(new javax.swing.table.DefaultTableModel(rowData2, colNames2));

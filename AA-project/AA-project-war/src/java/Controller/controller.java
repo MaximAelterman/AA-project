@@ -63,10 +63,9 @@ public class controller extends HttpServlet {
             case "Overzicht":
             {
                 HerladenMachines();
-               
                 RequestDispatcher view = request.getRequestDispatcher("overzicht.jsp");
                 view.forward (request, response);
-               break;
+                break;
             }
             case "Logout":
             {
@@ -127,19 +126,17 @@ public class controller extends HttpServlet {
             case "Wijzigingen opslaan":
             {
                 BigDecimal mnr = new BigDecimal(request.getParameter("mnr"));
-                Machines machine = db.getMachine(mnr);
+                // Machines machine = db.getMachine(mnr);
 
                 String naam = request.getParameter("naam");
                 String locatie = request.getParameter("locatie");
                 String opleiding = request.getParameter("opleiding");
                 String serienr = request.getParameter("serienr");
-                //BigDecimal aankoopprijs = new BigDecimal(request.getParameter("aankoopprijs"));
-                //BigDecimal huurprijs = new BigDecimal(request.getParameter("huurprijs"));
                 String aankoopprijs = request.getParameter("aankoopprijs");
                 String huurprijs = request.getParameter("huurprijs");
                 String omschrijving = request.getParameter("omschrijving");
                 
-                db.wijzigMachine(machine, naam, serienr, locatie, opleiding, aankoopprijs, huurprijs, omschrijving);
+                db.wijzigMachine(mnr, naam, serienr, locatie, opleiding, aankoopprijs, huurprijs, omschrijving);
                
                 HerladenMachines();     //om de machinelijst in de applicatie opnieuw in te laden
                           
@@ -174,13 +171,12 @@ public class controller extends HttpServlet {
             case "Reserveer":
             {
                 BigDecimal mnr = new BigDecimal(request.getParameter("details"));
-                if (request.getParameter("mnr")!=null)
-                { 
-                    Machines mach = (Machines) db.getMachine(mnr);
-                    sessie.setAttribute("mnr",mach);
-                }
                 
-                Machines mach = (Machines)sessie.getAttribute("machine");
+                Machines mach = (Machines) db.getMachine(mnr);
+                sessie.setAttribute("machine",mach);
+               
+                
+                // Machines machine = (Machines)sessie.getAttribute("machine");
                 List <Momenten> ResMom = new ArrayList<>();
                 List <Momenten> VrijMom = db.getMachineMomenten(mach);   // ophalen van machine momenten
                 List<String> user = new ArrayList<>();
@@ -200,9 +196,6 @@ public class controller extends HttpServlet {
                     sessie.setAttribute("user",user);
 
                 
-                Machines machine = db.getMachine(mnr);
-                sessie.setAttribute("machine", machine);
-
                 RequestDispatcher view = request.getRequestDispatcher ("reservatie.jsp" );
                 view.forward (request,response );   
             }
