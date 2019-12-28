@@ -146,7 +146,7 @@ public class Database implements DatabaseLocal, DatabaseRemote {
 
     // functie voor het aanpassen van een bestaande machine    
     @Override
-    public List getReservaties(int m){
+    public List getReservaties(int m){ //best bigdecimal ipv int?
         List res= em.createQuery("SELECT r FROM Reservaties").getResultList();
         return res;
     }

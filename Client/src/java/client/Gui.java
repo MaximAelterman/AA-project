@@ -8,6 +8,7 @@ package client;
 import beans.DatabaseRemote;
 import beans.Machines;
 import beans.Momenten;
+import beans.Reservaties;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
@@ -85,7 +86,6 @@ public class Gui extends javax.swing.JFrame {
     private void initComponents() {
 
         overzichtPanel = new javax.swing.JPanel();
-        Details = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         Machinetbl = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
@@ -96,13 +96,6 @@ public class Gui extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        Details.setText("Details");
-        Details.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                DetailsActionPerformed(evt);
-            }
-        });
 
         Machinetbl.setModel(new javax.swing.table.DefaultTableModel(
             rowData, colNames
@@ -120,10 +113,7 @@ public class Gui extends javax.swing.JFrame {
             .addGroup(overzichtPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(overzichtPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(overzichtPanelLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(Details))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 497, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 630, Short.MAX_VALUE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -134,9 +124,7 @@ public class Gui extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(11, 11, 11)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(Details)
-                .addContainerGap())
+                .addContainerGap(97, Short.MAX_VALUE))
         );
 
         terugKnop.setText("Terug");
@@ -191,32 +179,25 @@ public class Gui extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(overzichtPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(overzichtPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(150, 150, 150)
                     .addComponent(detailPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(150, Short.MAX_VALUE)))
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(overzichtPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(overzichtPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(105, 105, 105)
                     .addComponent(detailPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(45, Short.MAX_VALUE)))
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void DetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DetailsActionPerformed
-        // TODO add your handling code here:
-        
-    }//GEN-LAST:event_DetailsActionPerformed
 
     private void terugKnopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_terugKnopActionPerformed
         // TODO add your handling code here:
@@ -226,17 +207,21 @@ public class Gui extends javax.swing.JFrame {
     }//GEN-LAST:event_terugKnopActionPerformed
 
     private void toonMachine(Machines m){
-        this.momenten = this.db.getMomenten();
-        rowData2 = new Object[momenten.size()][3];
-       
+        //this.momenten = this.db.getMomenten();
+        List<Momenten> momentenlijst = db.getMachineMomenten(m);
+        List<Reservaties> reservatielijst = db.getReservaties(m.getMnr().intValue());
+        rowData2 = new Object[reservatielijst.size()][3];
+        
         int i = 0;
-        for(Momenten moment : this.momenten){
-            rowData2[i][0] = moment.getMomid();
-            rowData2[i][1] = moment.getStrt();
-            rowData2[i][2] = moment.getDuur();
+        for(Reservaties res : reservatielijst){
+            rowData2[i][0] = res.getRnr();
+            rowData2[i][1] = res.getUur();
+            rowData2[i][2] = res.getDuur();
+            System.out.println("\tResID: " + res.getRnr() + "  Starttijd: " + res.getUur() + "  Duur: " + res.getDuur() + "  Gebruiker: " + res.getGebruikersnaam());
             i++;
         }
         jTable1.setModel(new javax.swing.table.DefaultTableModel(rowData2, colNames2));
+        jTable1.setDefaultEditor(Object.class, null);
         this.setContentPane(detailPanel);
         naamLabel.setText(m.getMnaam());
         this.repaint();
@@ -279,7 +264,6 @@ public class Gui extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Details;
     private javax.swing.JTable Machinetbl;
     private javax.swing.JPanel detailPanel;
     private javax.swing.JLabel jLabel1;
