@@ -14,8 +14,17 @@
         <title>Reservatie Page</title>
     </head>
     <style>
-        th, td{
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+        }
+        td, th {
             border: 1px solid black;
+            text-align: center;
+            padding: 8px;
+        }
+        tr:nth-child(even) {
+            background-color: #dddddd;
         }
     </style>
     <body>
@@ -32,15 +41,20 @@
                 <th>start uur</th>
                 <th>duurtijd</th>
                 <th>Datum</th>
+                <th>Gereserveerd door</th>
             </tr>
-            <c:forEach var="resmom" items="${List<Momenten>resmom}">
+            <c:forEach var="resmom" items="${resmom}">
                 <tr>
                     <td>${resmom.momid}</td>
                     <td>${resmom.strt}</td>
                     <td>${resmom.duur}</td>
                     <td>${resmom.datum}</td>
+                    <c:forEach var="user" items="${user}">
+                        <td>${user}</td>
+                    </c:forEach>
                 </tr>
             </c:forEach>
+
         </table>
         <br>
         <h2>Vrije momenten</h2>
@@ -51,12 +65,12 @@
                 <th>duurtijd</th>
                 <th>Datum</th>
             </tr>
-            <c:forEach var="Vrijmom" items="${vrijMom}">
+            <c:forEach var="vrijmom" items="${vrijmom}">
                 <tr>
-                    <td>${VrijMom.momid}</td>
-                    <td>${VrijMom.strt}</td>
-                    <td>${VrijMom.duur}</td>
-                    <td>${VrijMom.datum}</td>
+                    <td>${vrijmom.momid}</td>
+                    <td>${vrijmom.strt}</td>
+                    <td>${vrijmom.duur}</td>
+                    <td>${vrijmom.datum}</td>
                 </tr>
             </c:forEach>
         </table>

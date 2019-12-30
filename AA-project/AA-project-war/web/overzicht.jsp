@@ -20,7 +20,8 @@
     </style>
     <body>
         <h1>Overzichtspagina</h1>
-        <h2>Welkom ${sessionScope.gebruiker}! U bent ingelogd als ${sessionScope.groep}.</h2>
+        <h2>Welkom ${sessionScope.gebruiker}! </h2>
+        <h3>U bent ingelogd als ${sessionScope.groep}.</h3>
         
         <div class="container">
             <c:if test="${sessionScope.groep == 'Docent'}">
