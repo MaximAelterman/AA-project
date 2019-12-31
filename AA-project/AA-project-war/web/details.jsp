@@ -3,8 +3,9 @@
     Created on : 13-nov-2019, 16:10:49
     Author     : Max
 --%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.util.ArrayList"%>
 <!DOCTYPE html>
@@ -20,6 +21,7 @@
         table,tr,td, th { border: 1px solid black;}
     </style>
     <body>
+        <jsp:useBean id="date" class="java.util.Date"/>
         <h1>Detailpagina van ${machine.mnaam}</h1>
         <h2>Omschrijving</h2>
         <p>${machine.omschrijving}</p>
@@ -51,8 +53,8 @@
                 <br/>
                 <h2> Moment toevoegen:</h2>
                 <p>
-                 Startuur: <input type="text" name="start" value="" size="4"/>  
-                 Duurtijd: <input type="text" name="duur" value="" size="2"/>   
+                 Starttijd: <input type="text" name="start" value="" size="4"/>  
+                 Duur: <input type="text" name="duur" value="" size="2"/>   
                  Datum:<input type="date" name="datum" value="" size="10"/>     
                  <input type="submit" name="knop"  value="Moment toevoegen" />
                 </p>
@@ -63,17 +65,17 @@
              <br/>
              <table>
              <tr>
-                <th>moment ID</th>
-                <th>start tijd</th>
-                <th>duur</th>
-                <th>datum</th>
+                <th>MomID</th>
+                <th>Starttijd</th>
+                <th>Duur</th>
+                <th>Datum</th>
             </tr>
                 <c:forEach var="moment" items="${machinemom}">
                 <tr>
                     <td>${moment.momid}</td>
                     <td>${moment.strt}</td>
                     <td>${moment.duur}</td>
-                    <td>${moment.datum}</td>
+                    <td><fmt:formatDate value="${moment.datum}" type="date" pattern="dd/MM/yyyy"></fmt:formatDate></td>
                 </tr>
                 </c:forEach>
              </table>

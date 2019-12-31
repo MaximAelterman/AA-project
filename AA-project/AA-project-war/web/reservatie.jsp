@@ -29,6 +29,7 @@
         }
     </style>
     <body>
+        <jsp:useBean id="date" class="java.util.Date"/>
         <h1>Hier komt reservatie pagina</h1>
         <form method="post" action=<c:url value="/controller.do"/>>
             <input type="submit" name="knop" value="Overzicht"/>
@@ -49,10 +50,7 @@
                     <td>${resmom.momid}</td>
                     <td>${resmom.strt}</td>
                     <td>${resmom.duur}</td>
-                    <td>
-                        <jsp:useBean id="date" class="java.util.Date"/>
-                        <fmt:formatDate value="${resmom.datum}" type="date" pattern="dd/MM/yyyy"></fmt:formatDate>
-                    </td>
+                    <td><fmt:formatDate value="${resmom.datum}" type="date" pattern="dd/MM/yyyy"></fmt:formatDate></td>
                     <c:forEach var="user" items="${user}">
                         <td>${user}</td>
                     </c:forEach>
@@ -74,7 +72,7 @@
                     <td>${vrijmom.momid}</td>
                     <td>${vrijmom.strt}</td>
                     <td>${vrijmom.duur}</td>
-                    <td>${vrijmom.datum}</td>
+                    <td><fmt:formatDate value="${vrijmom.datum}" type="date" pattern="dd/MM/yyyy"></fmt:formatDate></td>
                 </tr>
             </c:forEach>
         </table>

@@ -209,7 +209,7 @@ public class Gui extends javax.swing.JFrame {
         rowData2 = new Object[reservatielijst.size()][6];   //aantal colomen initialiseren op 6
             //formattering van datum
         Locale loc = new Locale("nl", "BE");
-        DateFormat dateFormatter = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.MEDIUM, loc);
+        DateFormat dateFormatter = DateFormat.getDateInstance(DateFormat.SHORT, loc);
         
         int i = 0;
         for(Reservaties res : reservatielijst){
