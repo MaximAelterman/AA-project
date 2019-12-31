@@ -16,14 +16,6 @@
                     <path-in-war>/</path-in-war>
                 </library>
                 <library>
-                    <file>${reference.interface.j2ee-module-car}</file>
-                    <path-in-war>/</path-in-war>
-                </library>
-                <library>
-                    <file>${reference.interface.jar}</file>
-                    <path-in-war>/</path-in-war>
-                </library>
-                <library>
                     <file>${reference.Client.j2ee-module-car}</file>
                     <path-in-war>/</path-in-war>
                 </library>
@@ -53,22 +45,6 @@
                 <target>dist-ear</target>
                 <clean-target>clean-ear</clean-target>
                 <id>j2ee-module-car</id>
-            </reference>
-            <reference>
-                <foreign-project>interface</foreign-project>
-                <artifact-type>j2ee_ear_archive</artifact-type>
-                <script>build.xml</script>
-                <target>dist-ear</target>
-                <clean-target>clean-ear</clean-target>
-                <id>j2ee-module-car</id>
-            </reference>
-            <reference>
-                <foreign-project>interface</foreign-project>
-                <artifact-type>jar</artifact-type>
-                <script>build.xml</script>
-                <target>jar</target>
-                <clean-target>clean</clean-target>
-                <id>jar</id>
             </reference>
         </references>
     </configuration>
