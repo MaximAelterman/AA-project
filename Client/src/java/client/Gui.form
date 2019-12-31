@@ -25,11 +25,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Component id="overzichtPanel" alignment="0" max="32767" attributes="0"/>
           <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="150" max="-2" attributes="0"/>
-                  <Component id="detailPanel" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
-              </Group>
+              <Component id="detailPanel" alignment="0" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -37,11 +33,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Component id="overzichtPanel" alignment="0" max="32767" attributes="0"/>
           <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="105" max="-2" attributes="0"/>
-                  <Component id="detailPanel" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
-              </Group>
+              <Component id="detailPanel" alignment="0" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -55,7 +47,7 @@
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jScrollPane1" alignment="0" pref="630" max="32767" attributes="0"/>
+                      <Component id="jScrollPane1" alignment="0" pref="776" max="32767" attributes="0"/>
                       <Component id="jLabel1" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -114,7 +106,7 @@
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           <Component id="terugKnop" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="jScrollPane2" alignment="0" pref="468" max="32767" attributes="0"/>
+                      <Component id="jScrollPane2" alignment="0" pref="776" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -125,9 +117,9 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="naamLabel" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" max="-2" attributes="0"/>
-                  <Component id="jScrollPane2" min="-2" pref="214" max="-2" attributes="0"/>
-                  <EmptySpace type="separate" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="jScrollPane2" min="-2" pref="290" max="-2" attributes="0"/>
+                  <EmptySpace pref="60" max="32767" attributes="0"/>
                   <Component id="terugKnop" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>

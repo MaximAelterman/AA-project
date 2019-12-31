@@ -4,6 +4,7 @@
     Author     : r0631
 --%>
 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -48,7 +49,10 @@
                     <td>${resmom.momid}</td>
                     <td>${resmom.strt}</td>
                     <td>${resmom.duur}</td>
-                    <td>${resmom.datum}</td>
+                    <td>
+                        <jsp:useBean id="date" class="java.util.Date"/>
+                        <fmt:formatDate value="${resmom.datum}" type="date" pattern="dd/MM/yyyy"></fmt:formatDate>
+                    </td>
                     <c:forEach var="user" items="${user}">
                         <td>${user}</td>
                     </c:forEach>

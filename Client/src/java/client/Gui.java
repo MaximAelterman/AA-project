@@ -11,7 +11,10 @@ import beans.Momenten;
 import beans.Reservaties;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.DateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import javax.swing.JFrame;
 import javax.swing.JTable;
 import javax.swing.table.TableColumn;
@@ -28,16 +31,17 @@ public class Gui extends javax.swing.JFrame {
     private DatabaseRemote db;
     private List<Machines> machines;
     private List<Momenten> momenten;
-    private String[] colNames = {"Mnr", "Naam", "Locatie"};
-    private Object[][] rowData;
-    
-    private String[] colNames2 = {"MomID", "Starttijd", "Duur"};
+        //machinelijst
+    private String[] colNames = {"Mnr", "Naam", "Locatie"};                             //namen van colommen
+    private Object[][] rowData;                                                         //wordt in applicatie ingevuld, rijen
+        //reservatielijst
+    private String[] colNames2 = {"ResID", "MomID", "Starttijd", "Duur", "Datum", "Gebruiker"};
     private Object[][] rowData2;
     
     public Gui(DatabaseRemote db) {
         this.db = db;
         this.machines = db.getMachines();
-        rowData = new Object[machines.size()][3];
+        rowData = new Object[machines.size()][3];   //aantal colommen initialiseren op 3
 
                 //init tabel
         int i = 0;
@@ -48,11 +52,11 @@ public class Gui extends javax.swing.JFrame {
             i++;
         }
         
-        initComponents();
+        initComponents();                       //Gegenereerde code uitvoeren
         
             //init detail paneel
-        detailPanel.setSize(this.getSize());
-        this.setContentPane(overzichtPanel);
+        detailPanel.setSize(this.getSize());    //zorgt ervoor dat beide jPanels even groot zijn
+        this.setContentPane(overzichtPanel);    //zet huidige jPanel op overzichtpaneel
         
         
         Machinetbl.addMouseListener(new MouseAdapter() {
@@ -113,7 +117,7 @@ public class Gui extends javax.swing.JFrame {
             .addGroup(overzichtPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(overzichtPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 630, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 776, Short.MAX_VALUE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -160,7 +164,7 @@ public class Gui extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, detailPanelLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(terugKnop))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 468, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 776, Short.MAX_VALUE))
                 .addContainerGap())
         );
         detailPanelLayout.setVerticalGroup(
@@ -169,8 +173,8 @@ public class Gui extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(naamLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
                 .addComponent(terugKnop)
                 .addContainerGap())
         );
@@ -181,19 +185,13 @@ public class Gui extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(overzichtPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(150, 150, 150)
-                    .addComponent(detailPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addComponent(detailPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(overzichtPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(105, 105, 105)
-                    .addComponent(detailPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addComponent(detailPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -201,35 +199,36 @@ public class Gui extends javax.swing.JFrame {
 
     private void terugKnopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_terugKnopActionPerformed
         // TODO add your handling code here:
-        this.setContentPane(overzichtPanel);
-        this.repaint();
+        this.setContentPane(overzichtPanel);        //huidige jPanel naar overzichtPanel veranderen
+        this.repaint();                             //venster updaten
         this.revalidate();
     }//GEN-LAST:event_terugKnopActionPerformed
 
     private void toonMachine(Machines m){
-        //this.momenten = this.db.getMomenten();
-        List<Momenten> momentenlijst = db.getMachineMomenten(m);
         List<Reservaties> reservatielijst = db.getReservaties(m.getMnr());
-        rowData2 = new Object[reservatielijst.size()][3];
+        rowData2 = new Object[reservatielijst.size()][6];   //aantal colomen initialiseren op 6
+            //formattering van datum
+        Locale loc = new Locale("nl", "BE");
+        DateFormat dateFormatter = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.MEDIUM, loc);
         
         int i = 0;
         for(Reservaties res : reservatielijst){
-            rowData2[i][0] = res.getRnr();
-            /*
-            rowData2[i][1] = res.getUur();
-            rowData2[i][2] = res.getDuur();
-            System.out.println("\tResID: " + res.getRnr() + "  Starttijd: " + res.getUur() + "  Duur: " + res.getDuur() + "  Gebruiker: " + res.getGebruikersnaam());
-            */
-            // hier moet de data van de Reservaties momenten opgehaald worden
-            rowData2[i][1] = res.getGebruikersnaam();
-            rowData2[i][2] = res.getMomid();
-            // System.out.println("\tResID: " + res.getRnr() + "  Starttijd: " + res.getUur() + "  Duur: " + res.getDuur() + "  Gebruiker: " + res.getGebruikersnaam());
+            rowData2[i][0] = res.getRnr();                                      //ResID
+            rowData2[i][1] = res.getMomid().getMomid();                         //MomID
+            rowData2[i][2] = res.getMomid().getStrt();                          //Starttijd
+            rowData2[i][3] = res.getMomid().getDuur();                          //Duur
+            rowData2[i][4] = dateFormatter.format(res.getMomid().getDatum());   //Datum
+            rowData2[i][5] = res.getGebruikersnaam().getGebruikersnaam();       //Gebruiker
+            
+            System.out.println("\tResID: " + rowData2[i][0] + " MomID: " + rowData2[i][1] + "  Starttijd: " + rowData2[i][2] + "  Duur: " + rowData2[i][3] + " Datum: " + rowData2[i][4] + "  Gebruiker: " + rowData2[i][5]);
             i++;
         }
+            //reservatietabel initialiseren met bovenstaande data
         jTable1.setModel(new javax.swing.table.DefaultTableModel(rowData2, colNames2));
         jTable1.setDefaultEditor(Object.class, null);
-        this.setContentPane(detailPanel);
         naamLabel.setText(m.getMnaam());
+            //Juiste jPanel tonen
+        this.setContentPane(detailPanel);
         this.repaint();
         this.revalidate();
     }

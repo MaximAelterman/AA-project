@@ -147,8 +147,8 @@ public class Database implements DatabaseLocal, DatabaseRemote {
 
     // functie voor het ophalen van Reservaties van een bestaande machine    
     @Override
-    public List getReservaties(BigDecimal Momnr){ //best bigdecimal ipv int?
-        List res= em.createQuery("SELECT r FROM Reservaties r, Momenten m WHERE m.momid = r.momid and m.mnr =: mnr").setParameter("mnr", Momnr).getResultList();
+    public List getReservaties(BigDecimal mnr){
+        List res = em.createQuery("SELECT r FROM Reservaties r WHERE EXISTS (SELECT 'moment' FROM Momenten m WHERE r.momid = m AND m.mnr.mnr = :mnr)").setParameter("mnr", mnr).getResultList();
         return res;
     }
 
