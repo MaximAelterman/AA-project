@@ -21,6 +21,7 @@ public interface DatabaseLocal {
     public Machines getMachine(BigDecimal mnr);
     public List getMachineMomenten(Object mnr);
     public List getMomenten();
+    public Object getMoment(BigDecimal momid);
     public BigDecimal addMachine(String naam, String serienr, String locatie, String opleiding, String aankoopprijs, String huurprijs, String omschrijving);
     public void wijzigMachine(BigDecimal mnr, String naam, String serienr, String locatie, String opleiding, String aankoopprijs, String huurprijs, String omschrijving);
     public List getReservaties(BigDecimal Momnr);
@@ -28,4 +29,6 @@ public interface DatabaseLocal {
     public BigDecimal volgendMnr();
     public boolean isVrij(Object momid);
     public String getUserResMomid(Object momid);
+    public void reserveer(Momenten momid, Gebruikers gebruiker);
+    public BigDecimal volgendResid();
 }

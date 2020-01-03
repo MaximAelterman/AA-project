@@ -45,15 +45,15 @@
                 <th>Datum</th>
                 <th>Gereserveerd door</th>
             </tr>
+            <c:set var="i" scope="session" value="0"/>
             <c:forEach var="resmom" items="${resmom}">
                 <tr>
                     <td>${resmom.momid}</td>
                     <td>${resmom.strt}</td>
                     <td>${resmom.duur}</td>
                     <td><fmt:formatDate value="${resmom.datum}" type="date" pattern="dd/MM/yyyy"></fmt:formatDate></td>
-                    <c:forEach var="user" items="${user}">
-                        <td>${user}</td>
-                    </c:forEach>
+                    <td>${user[i]}</td>
+                    <c:set var="i" scope="session" value="${i+1}"/>
                 </tr>
             </c:forEach>
 
@@ -68,12 +68,16 @@
                 <th>Datum</th>
             </tr>
             <c:forEach var="vrijmom" items="${vrijmom}">
+                <form method="post" action=<c:url value="/controller.do"/>>
                 <tr>
                     <td>${vrijmom.momid}</td>
                     <td>${vrijmom.strt}</td>
                     <td>${vrijmom.duur}</td>
                     <td><fmt:formatDate value="${vrijmom.datum}" type="date" pattern="dd/MM/yyyy"></fmt:formatDate></td>
+                    <td><input type="submit" name="knop" value="Reserveer moment"/></td>
+                    <input type="hidden" name="momid" value="${vrijmom.momid}"/>
                 </tr>
+                </form>
             </c:forEach>
         </table>
         

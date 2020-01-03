@@ -35,7 +35,7 @@ public class Database implements DatabaseLocal, DatabaseRemote {
     // functie voor ophalen van de gegevens van de ingelogde gebruiker    
     @Override
     public Object getGebruiker(String l){
-        Gebruikers gebr = (Gebruikers) em.createNamedQuery("Gebruikers.findByLogin").setParameter("login",l).getSingleResult();
+        Object gebr = em.createQuery("SELECT g FROM Gebruikers g WHERE g.gebruikersnaam LIKE :login").setParameter("login",l).getSingleResult();
         return gebr;
     }
 
@@ -76,6 +76,12 @@ public class Database implements DatabaseLocal, DatabaseRemote {
     public List getMomenten(){
         List mom = em.createNamedQuery("Momenten.findAll").getResultList();
         return mom;
+    }
+    
+    @Override
+    public Object getMoment(BigDecimal momid){
+        Object moment = em.createQuery("Select m FROM Momenten m where m.momid = :momid").setParameter("momid", momid).getSingleResult();
+        return moment;
     }
     
     // functie voor het toevoegen van een nieuw machine
@@ -182,4 +188,38 @@ public class Database implements DatabaseLocal, DatabaseRemote {
         List res = em.createQuery("SELECT r FROM Reservaties r WHERE r.momid = :momid").setParameter("momid",momid).getResultList();
         return (res.isEmpty()) ;
     }  
+    
+    // functie voor het reserveren van een moment
+    @Override
+    public void reserveer(Momenten moment, Gebruikers gebruiker) {
+        try {
+            Reservaties res = new Reservaties();
+            BigDecimal resid = volgendResid();
+            res.setRnr(resid);
+            res.setMomid(moment);
+            res.setGebruikersnaam(gebruiker);
+            em.persist(res);
+        } catch (Exception eee) {
+            out.println("Fout bij reservatie van moment: " + eee);
+        }
+
+    }
+    
+    // functie voor ophalen van het volgende reservatie nr. wordt gebruikt in reserveer    
+    @Override
+    public BigDecimal volgendResid() {
+        BigDecimal laatsteResid;
+        BigDecimal volgendeResid;
+        long aantalRes = (long) em.createQuery("SELECT COUNT(r.rnr) FROM Reservaties r").getSingleResult();
+        if(aantalRes == 0) {
+            return new BigDecimal(1);
+        }
+        else {
+            laatsteResid = (BigDecimal) em.createQuery("SELECT MAX(r.rnr) FROM Reservaties r").getSingleResult();
+            volgendeResid = laatsteResid.add(new BigDecimal(1));
+            return volgendeResid;
+        }
+    }
+    
+    
 }

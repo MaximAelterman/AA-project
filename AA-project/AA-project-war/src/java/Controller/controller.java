@@ -104,11 +104,8 @@ public class controller extends HttpServlet {
                 String omschrijving = request.getParameter("omschrijving");
                 
                 BigDecimal nr =  db.addMachine(naam,serienr, locatie, opleiding, aankoopprijs, huurprijs, omschrijving);
-                
                 HerladenMachines();                                         //om de machinelijst in de applicatie opnieuw in te laden
                 
-                //Machines machine = db.getMachine(nr);
-                //sessie.setAttribute("machine", machine);
                 RequestDispatcher view = request.getRequestDispatcher("overzicht.jsp");
                 view.forward(request, response);
                 break;
@@ -117,7 +114,7 @@ public class controller extends HttpServlet {
             {
                 BigDecimal mnr = new BigDecimal(request.getParameter("details"));
                 Machines machine = db.getMachine(mnr);
-                // sessie.setAttribute("mnr", mnr);
+                
                 sessie.setAttribute("machine", machine);
                 RequestDispatcher view = request.getRequestDispatcher("wijzig_machine.jsp");
                 view.forward(request, response);
@@ -126,8 +123,7 @@ public class controller extends HttpServlet {
             case "Wijzigingen opslaan":
             {
                 BigDecimal mnr = new BigDecimal(request.getParameter("mnr"));
-                // Machines machine = db.getMachine(mnr);
-
+                
                 String naam = request.getParameter("naam");
                 String locatie = request.getParameter("locatie");
                 String opleiding = request.getParameter("opleiding");
@@ -175,30 +171,60 @@ public class controller extends HttpServlet {
                 Machines mach = (Machines) db.getMachine(mnr);
                 sessie.setAttribute("machine",mach);
                
-                
-                // Machines machine = (Machines)sessie.getAttribute("machine");
                 List <Momenten> ResMom = new ArrayList<>();
                 List <Momenten> VrijMom = db.getMachineMomenten(mach);   // ophalen van machine momenten
                 List<String> user = new ArrayList<>();
                 
                 for(int i=0;i<VrijMom.size();){
-                        if(!db.isVrij(VrijMom.get(i))) {
-                            ResMom.add(VrijMom.get(i));
-                            user.add(db.getUserResMomid(VrijMom.get(i)));
-                            VrijMom.remove(i);  
-                        } 
-                        else{
-                            i++;
-                        }
+                    if(!db.isVrij(VrijMom.get(i))) {
+                        ResMom.add(VrijMom.get(i));
+                        user.add(db.getUserResMomid(VrijMom.get(i)));
+                        VrijMom.remove(i);  
+                    } 
+                    else{
+                        i++;
                     }
-                    sessie.setAttribute("vrijmom",VrijMom);
-                    sessie.setAttribute("resmom",ResMom);
-                    sessie.setAttribute("user",user);
+                }
+                sessie.setAttribute("vrijmom",VrijMom);
+                sessie.setAttribute("resmom",ResMom);
+                sessie.setAttribute("user",user);
 
                 
                 RequestDispatcher view = request.getRequestDispatcher ("reservatie.jsp" );
-                view.forward (request,response );   
+                view.forward (request,response );
+                break;
             }
+            case "Reserveer moment":
+            {
+                Gebruikers gebr = (Gebruikers)db.getGebruiker(gebruiker);
+                Momenten moment = (Momenten)db.getMoment(new BigDecimal(request.getParameter("momid")));
+                db.reserveer(moment, gebr);
+                
+                    // lijst met reservaties herladen
+                Machines mach = (Machines) sessie.getAttribute("machine");
+                List <Momenten> ResMom = new ArrayList<>();
+                List <Momenten> VrijMom = db.getMachineMomenten(mach);
+                List<String> user = new ArrayList<>();
+                
+                for(int i=0;i<VrijMom.size();){
+                    if(!db.isVrij(VrijMom.get(i))) {
+                        ResMom.add(VrijMom.get(i));
+                        user.add(db.getUserResMomid(VrijMom.get(i)));
+                        VrijMom.remove(i);  
+                    } 
+                    else{
+                        i++;
+                    }
+                }
+                sessie.setAttribute("vrijmom",VrijMom);
+                sessie.setAttribute("resmom",ResMom);
+                sessie.setAttribute("user",user);
+                
+                RequestDispatcher view = request.getRequestDispatcher ("reservatie.jsp" );
+                view.forward (request,response );  
+                break;
+            }
+            
             default:
                 break;
         }
