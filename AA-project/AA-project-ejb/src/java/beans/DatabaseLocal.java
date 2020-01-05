@@ -31,4 +31,6 @@ public interface DatabaseLocal {
     public String getUserResMomid(Object momid);
     public void reserveer(Momenten momid, Gebruikers gebruiker);
     public BigDecimal volgendResid();
+    public boolean MomentCheck(Object mnr, String start, String duurtijd, String datum);
+
 }

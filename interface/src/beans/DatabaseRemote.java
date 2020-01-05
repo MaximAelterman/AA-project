@@ -28,4 +28,6 @@ public interface DatabaseRemote {
     public BigDecimal volgendMnr();
     public boolean isVrij(Object momid);
     public String getUserResMomid(Object momid);
+    public boolean MomentCheck(Object mnr, String start, String duurtijd, String datum);
+
 }

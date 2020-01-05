@@ -187,7 +187,14 @@ public class Database implements DatabaseLocal, DatabaseRemote {
     public boolean isVrij(Object momid){
         List res = em.createQuery("SELECT r FROM Reservaties r WHERE r.momid = :momid").setParameter("momid",momid).getResultList();
         return (res.isEmpty()) ;
-    }  
+    }
+    
+    @Override
+    public boolean MomentCheck(Object mnr, String start, String duurtijd, String datum)
+    {
+      
+      return true;
+    }
     
     // functie voor het reserveren van een moment
     @Override

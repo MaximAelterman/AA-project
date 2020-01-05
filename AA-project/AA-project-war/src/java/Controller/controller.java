@@ -154,9 +154,11 @@ public class controller extends HttpServlet {
             
             case "Moment toevoegen":
             {
+                
                 String start = request.getParameter("start");
                 String duurtijd = request.getParameter("duur");
                 String datum = request.getParameter("datum");
+                boolean check = db.MomentCheck(sessie.getAttribute("machine"), start, duurtijd, datum);
                 db.addMoment(sessie.getAttribute("machine"), start, duurtijd, datum);
                 
                 RequestDispatcher view = request.getRequestDispatcher("details.jsp");
@@ -194,6 +196,17 @@ public class controller extends HttpServlet {
                 view.forward (request,response );
                 break;
             }
+            
+            case "Bevestig reservatie":
+            {
+                BigDecimal momnr = new BigDecimal(request.getParameter("momid"));
+                Momenten moment = (Momenten)db.getMoment(momnr);
+                sessie.setAttribute("Res",moment);
+                RequestDispatcher view = request.getRequestDispatcher ("bevestig.jsp" );
+                view.forward (request,response );
+                break;                
+            }
+            
             case "Reserveer moment":
             {
                 Gebruikers gebr = (Gebruikers)db.getGebruiker(gebruiker);

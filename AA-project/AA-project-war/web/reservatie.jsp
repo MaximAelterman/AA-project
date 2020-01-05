@@ -36,6 +36,7 @@
         </form>
         <p> ik wil een reservatie maken met machine ${machine.mnr} met naam ${machine.mnaam}</p>
         <br>
+        <c:if test="${sessionScope.groep == 'Docent'}">
         <h2>Gereserveerde momenten</h2>
         <table>
             <tr>
@@ -56,9 +57,9 @@
                     <c:set var="i" scope="session" value="${i+1}"/>
                 </tr>
             </c:forEach>
-
         </table>
         <br>
+        </c:if>
         <h2>Vrije momenten</h2>
         <table>
             <tr>
@@ -74,7 +75,7 @@
                     <td>${vrijmom.strt}</td>
                     <td>${vrijmom.duur}</td>
                     <td><fmt:formatDate value="${vrijmom.datum}" type="date" pattern="dd/MM/yyyy"></fmt:formatDate></td>
-                    <td><input type="submit" name="knop" value="Reserveer moment"/></td>
+                    <td><input type="submit" name="knop" value="Bevestig reservatie"/></td>
                     <input type="hidden" name="momid" value="${vrijmom.momid}"/>
                 </tr>
                 </form>
