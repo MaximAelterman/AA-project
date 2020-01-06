@@ -8,6 +8,7 @@
 <%@page import="java.math.BigInteger"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@page import ="beans.Momenten" %>
 <% Momenten Res = (Momenten)session.getAttribute("Res");
 %>
@@ -19,25 +20,41 @@
         <title>Reservaties bevestigingspagina</title>
     </head>
     <body>
-        <h1>Kan u uw reservaties bevestigen aub</h1>
+        <h1>Bevestig uw reservatie</h1>
         <% 
             double prijs = Res.getMnr().getHuurprijs().doubleValue();
             double duur = Res.getDuur().doubleValue();
             double totalprijs= prijs*duur;  
         %>
    
-         <c:if test="${groep == 'Extern'}">
-             <p>De huurprijs voor de reservatie bedraagt <%=totalprijs%> euro </p>
-         </c:if>
-        <form method= "post" action=<c:url value="/controller.do"/> >
-            <input type="hidden" name="momid" value="${Res.momid}"/>
-            <input type="submit" name="knop" value="Reserveer moment"/>
-        </form>
-        <form method= "post" action=<c:url value="/controller.do"/> >
-            <input type="hidden" name="details" value="${machine.mnr}"/>
-            <input type="submit" name="knop" value="Reserveer"/>
-        </form>
-
-
+        <table>
+            <tr><td>Naam:</td><td>${sessionScope.machine.getMnaam()}</td></tr>
+            <tr><td>Serienummer:</td><td>${sessionScope.machine.getSerienr()}</td></tr>
+            <tr><td>Locatie:</td><td>${sessionScope.machine.getMloc()}</td></tr>
+            <tr><td>Datum:</td><td><fmt:formatDate value="${sessionScope.Res.getDatum()}" type="date" pattern="dd/MM/yyyy"></fmt:formatDate></td></tr>
+            <tr><td>Starttijd:</td><td>${sessionScope.Res.getStrt()}u</td></tr>
+            <tr><td>Duur:</td><td>${sessionScope.Res.getDuur()}u</td></tr>
+            <c:choose>
+                <c:when test="${groep == 'Extern'}">
+                    <tr><td>Prijs:</td><td><%=totalprijs%> euro</td></tr>
+                </c:when>
+                <c:otherwise>
+                    <tr><td>Prijs:</td><td>Gratis</td></tr>
+                </c:otherwise>
+            </c:choose>
+            <tr><td>
+                    <form method= "post" action=<c:url value="/controller.do"/> >
+                        <input type="hidden" name="details" value="${machine.mnr}"/>
+                        <input type="hidden" name="knop" value="Reserveer"/>
+                        <input type="submit" name="terugknop" value="Annuleer"/>
+                    </form>
+                </td>
+                <td>
+                    <form method= "post" action=<c:url value="/controller.do"/> >
+                        <input type="hidden" name="momid" value="${Res.momid}"/>
+                        <input type="submit" name="knop" value="Reserveer moment"/>
+                    </form>
+                </td></tr>
+        </table>
     </body>
 </html>

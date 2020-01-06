@@ -48,15 +48,16 @@
             <c:if test="${groep == 'Docent'}">
                  <input type="submit" name="knop"  value="MachineMoment" />
             </c:if>
-                 
+        </form>
+        <form method="post" action=<c:url value="/controller.do"/>>
             <c:if test="${groep == 'Docent'}">
                 <br/>
                 <h2> Moment toevoegen:</h2>
                 <p>
-                 Starttijd: <input type="text" name="start" value="" size="4"/>  
-                 Duur: <input type="text" name="duur" value="" size="2"/>   
-                 Datum:<input type="date" name="datum" value="" size="10"/>     
-                 <input type="submit" name="knop"  value="Moment toevoegen" />
+                 Starttijd: <input type="text" name="start" value="" size="4" required/>  
+                 Duur: <input type="text" name="duur" value="" size="2" required/>   
+                 Datum:<input type="date" name="datum" value="" size="10" required/>     
+                 <input type="submit" name="knop"  value="Moment toevoegen" required/>
                 </p>
             </c:if>   
         </form>

@@ -21,14 +21,17 @@
             <c:if test="${groep == 'Docent'}">
             <form method="post" name="nieuwemachine" action=<c:url value="/controller.do"/>>
                 <table>
-                    <tr><td>Naam</td><td><input type="text" name="naam"/></td></tr>
-                    <tr><td>Serienummer</td><td><input type="text" name="serienr" /></td></tr>
-                    <tr><td>Locatie:</td><td><input type="text" name="locatie"/></td></tr>
+                    <tr><td>Naam:</td><td><input type="text" name="naam" required/></td></tr>
+                    <tr><td>Serienummer:</td><td><input type="text" name="serienr" required/></td></tr>
+                    <tr><td>Locatie:</td><td><input type="text" name="locatie" required/></td></tr>
                     <tr><td>Opleiding:</td><td><input type="text" name="opleiding" value = "${opleiding}" readonly/></td></tr>
-                    <tr><td>Aankoopprijs:</td><td><input type="text" name="aankoopprijs"/></td></tr>
-                    <tr><td>Huurprijs(1u):</td><td><input type="text" name="huurprijs"/></td></tr>
-                    <tr><td>Omschrijving:</td><td><textarea cols="40" rows="6" name="omschrijving"></textarea></td></tr>
-                    <tr><td></td><td><input type="submit" name="knop" value="Machine toevoegen"/></td></tr>
+                    <tr><td>Aankoopprijs:</td><td><input type="text" name="aankoopprijs" required/></td></tr>
+                    <tr><td>Huurprijs(1u):</td><td><input type="text" name="huurprijs" required/></td></tr>
+                    <tr><td>Omschrijving:</td><td><textarea cols="40" rows="6" name="omschrijving" required></textarea></td></tr>
+                    <tr>
+                        <td><input type="submit" name="knop" value="Annuleer" formnovalidate/></td>
+                        <td><input type="submit" name="knop" value="Machine toevoegen"/></td>
+                    </tr>
                 </table>
             </form>
             </c:if>

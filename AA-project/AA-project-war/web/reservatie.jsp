@@ -30,19 +30,17 @@
     </style>
     <body>
         <jsp:useBean id="date" class="java.util.Date"/>
-        <h1>Hier komt reservatie pagina</h1>
+        <h1>Reservatie van ${machine.mnaam}</h1>
         <form method="post" action=<c:url value="/controller.do"/>>
             <input type="submit" name="knop" value="Overzicht"/>
         </form>
-        <p> ik wil een reservatie maken met machine ${machine.mnr} met naam ${machine.mnaam}</p>
-        <br>
         <c:if test="${sessionScope.groep == 'Docent'}">
         <h2>Gereserveerde momenten</h2>
         <table>
             <tr>
                 <th>MomID</th>
-                <th>start uur</th>
-                <th>duurtijd</th>
+                <th>Startuur</th>
+                <th>Duurtijd</th>
                 <th>Datum</th>
                 <th>Gereserveerd door</th>
             </tr>
@@ -64,8 +62,8 @@
         <table>
             <tr>
                 <th>MomID</th>
-                <th>start uur</th>
-                <th>duurtijd</th>
+                <th>Startuur</th>
+                <th>Duurtijd</th>
                 <th>Datum</th>
             </tr>
             <c:forEach var="vrijmom" items="${vrijmom}">
@@ -75,7 +73,7 @@
                     <td>${vrijmom.strt}</td>
                     <td>${vrijmom.duur}</td>
                     <td><fmt:formatDate value="${vrijmom.datum}" type="date" pattern="dd/MM/yyyy"></fmt:formatDate></td>
-                    <td><input type="submit" name="knop" value="Bevestig reservatie"/></td>
+                    <td><input type="submit" name="knop" value="Reserveer machine"/></td>
                     <input type="hidden" name="momid" value="${vrijmom.momid}"/>
                 </tr>
                 </form>

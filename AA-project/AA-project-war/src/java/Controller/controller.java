@@ -10,6 +10,7 @@ import beans.DatabaseLocal;
 import beans.*;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.*;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
@@ -60,6 +61,7 @@ public class controller extends HttpServlet {
         }
         
         switch (knop) {
+            case "Annuleer":
             case "Overzicht":
             {
                 HerladenMachines();
@@ -67,15 +69,12 @@ public class controller extends HttpServlet {
                 view.forward (request, response);
                 break;
             }
+            
             case "Logout":
             {
-               /* sessie.removeAttribute("groep");
-                sessie.removeAttribute("gebruiker");
-                sessie.removeAttribute("opleiding");*/
                 sessie.invalidate();
                 RequestDispatcher view = request.getRequestDispatcher("login.jsp");
-                view.forward (request, response);
-                //response.sendRedirect("controller.do" );
+                view.forward(request, response);
                 break;
             }
             case "Details":
@@ -83,6 +82,7 @@ public class controller extends HttpServlet {
                 BigDecimal mnr = new BigDecimal(request.getParameter("details"));
                 Machines machine = db.getMachine(mnr);
                 sessie.setAttribute("machine", machine);
+                sessie.setAttribute("mnr", mnr);
                 RequestDispatcher view = request.getRequestDispatcher("details.jsp");
                 view.forward(request, response);
                 break;
@@ -143,26 +143,29 @@ public class controller extends HttpServlet {
             
             case "MachineMoment":
             {
-                BigDecimal mnr = new BigDecimal(request.getParameter("details"));
-                Machines machine = db.getMachine(mnr);
+                Machines machine = (Machines) sessie.getAttribute("machine");
                 List<Momenten> machinemom = db.getMachineMomenten(machine);   // ophalen van machine momenten
                 sessie.setAttribute("machinemom",machinemom);
                 sessie.setAttribute("test", "oke");
                 RequestDispatcher view = request.getRequestDispatcher ("details.jsp" );
-                view.forward (request,response );
+                view.forward(request,response);
             }
             
             case "Moment toevoegen":
             {
-                
                 String start = request.getParameter("start");
                 String duurtijd = request.getParameter("duur");
                 String datum = request.getParameter("datum");
-                boolean check = db.MomentCheck(sessie.getAttribute("machine"), start, duurtijd, datum);
+                boolean check = db.MomentCheck(sessie.getAttribute("machine"), start, duurtijd, datum);     //check mag weg?
                 db.addMoment(sessie.getAttribute("machine"), start, duurtijd, datum);
+                    
+                    // momententabel updaten
+                Machines machine = (Machines) sessie.getAttribute("machine");
+                List<Momenten> machinemom = db.getMachineMomenten(machine);
+                sessie.setAttribute("machinemom",machinemom);
                 
                 RequestDispatcher view = request.getRequestDispatcher("details.jsp");
-                view.forward (request,response);
+                view.forward(request,response);
                 break;
             }
             
@@ -193,17 +196,17 @@ public class controller extends HttpServlet {
 
                 
                 RequestDispatcher view = request.getRequestDispatcher ("reservatie.jsp" );
-                view.forward (request,response );
+                view.forward(request,response);
                 break;
             }
             
-            case "Bevestig reservatie":
+            case "Reserveer machine":
             {
                 BigDecimal momnr = new BigDecimal(request.getParameter("momid"));
                 Momenten moment = (Momenten)db.getMoment(momnr);
                 sessie.setAttribute("Res",moment);
                 RequestDispatcher view = request.getRequestDispatcher ("bevestig.jsp" );
-                view.forward (request,response );
+                view.forward(request,response);
                 break;                
             }
             
