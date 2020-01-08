@@ -28,21 +28,23 @@
         %>
    
         <table>
-            <tr><td>Naam:</td><td>${sessionScope.machine.getMnaam()}</td></tr>
-            <tr><td>Serienummer:</td><td>${sessionScope.machine.getSerienr()}</td></tr>
-            <tr><td>Locatie:</td><td>${sessionScope.machine.getMloc()}</td></tr>
-            <tr><td>Datum:</td><td><fmt:formatDate value="${sessionScope.Res.getDatum()}" type="date" pattern="dd/MM/yyyy"></fmt:formatDate></td></tr>
-            <tr><td>Starttijd:</td><td>${sessionScope.Res.getStrt()}u</td></tr>
-            <tr><td>Duur:</td><td>${sessionScope.Res.getDuur()}u</td></tr>
+            <tr><td>Naam: </td><td>${sessionScope.machine.getMnaam()}</td></tr>
+            <tr><td>Serienummer: </td><td>${sessionScope.machine.getSerienr()}</td></tr>
+            <tr><td>Locatie: </td><td>${sessionScope.machine.getMloc()}</td></tr>
+            <tr><td>Datum: </td><td><fmt:formatDate value="${sessionScope.Res.getDatum()}" type="date" pattern="dd/MM/yyyy"></fmt:formatDate></td></tr>
+            <tr><td>Starttijd: </td><td>${sessionScope.Res.getStrt()}u</td></tr>
+            <tr><td>Duur: </td><td>${sessionScope.Res.getDuur()}u</td></tr>
             <c:choose>
                 <c:when test="${groep == 'Extern'}">
-                    <tr><td>Prijs:</td><td><%=totalprijs%> euro</td></tr>
+                    <tr><td>Prijs: </td><td><%=totalprijs%> euro</td></tr>
                 </c:when>
                 <c:otherwise>
-                    <tr><td>Prijs:</td><td>Gratis</td></tr>
+                    <tr><td>Prijs: </td><td>Gratis</td></tr>
                 </c:otherwise>
             </c:choose>
-            <tr><td>
+            <br>
+            <tr>
+                <td>
                     <form method= "post" action=<c:url value="/controller.do"/> >
                         <input type="hidden" name="details" value="${machine.mnr}"/>
                         <input type="hidden" name="knop" value="Reserveer"/>
@@ -54,7 +56,8 @@
                         <input type="hidden" name="momid" value="${Res.momid}"/>
                         <input type="submit" name="knop" value="Reserveer moment"/>
                     </form>
-                </td></tr>
+                </td>
+            </tr>
         </table>
     </body>
 </html>

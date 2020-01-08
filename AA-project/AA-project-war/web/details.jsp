@@ -4,6 +4,8 @@
     Author     : Max
 --%>
 
+<%@page import="javax.swing.JFrame"%>
+<%@page import="javax.swing.JOptionPane"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -49,8 +51,13 @@
                  <input type="submit" name="knop"  value="MachineMoment" />
             </c:if>
         </form>
+        
         <form method="post" action=<c:url value="/controller.do"/>>
             <c:if test="${groep == 'Docent'}">
+                <c:if test="${momentcheck == false}">
+                    <p style="color: red;font-size: 14px; font-weight: bold"> Er is een overlap van het aangemaakte moment<p>
+                </c:if>
+                        
                 <br/>
                 <h2> Moment toevoegen:</h2>
                 <p>
@@ -61,6 +68,9 @@
                 </p>
             </c:if>   
         </form>
+         <br>
+        
+             
          <c:if test="${test == 'oke'}">
              <h2> Machine Momenten:</h2>
              <br/>
@@ -80,6 +90,6 @@
                 </tr>
                 </c:forEach>
              </table>
-            </c:if>  
+            </c:if>
     </body>
 </html>

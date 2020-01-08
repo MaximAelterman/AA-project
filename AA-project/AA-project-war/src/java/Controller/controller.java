@@ -83,6 +83,7 @@ public class controller extends HttpServlet {
                 Machines machine = db.getMachine(mnr);
                 sessie.setAttribute("machine", machine);
                 sessie.setAttribute("mnr", mnr);
+                sessie.setAttribute("momentcheck", true);
                 RequestDispatcher view = request.getRequestDispatcher("details.jsp");
                 view.forward(request, response);
                 break;
@@ -157,12 +158,16 @@ public class controller extends HttpServlet {
                 String duurtijd = request.getParameter("duur");
                 String datum = request.getParameter("datum");
                 boolean check = db.MomentCheck(sessie.getAttribute("machine"), start, duurtijd, datum);     //check mag weg?
-                db.addMoment(sessie.getAttribute("machine"), start, duurtijd, datum);
-                    
-                    // momententabel updaten
-                Machines machine = (Machines) sessie.getAttribute("machine");
-                List<Momenten> machinemom = db.getMachineMomenten(machine);
-                sessie.setAttribute("machinemom",machinemom);
+                if (check == true)
+                {
+                    db.addMoment(sessie.getAttribute("machine"), start, duurtijd, datum);
+                    Machines machine = (Machines) sessie.getAttribute("machine");
+                    List<Momenten> machinemom = db.getMachineMomenten(machine);
+                    sessie.setAttribute("machinemom",machinemom);
+                }
+                else{
+                    sessie.setAttribute("momentcheck", check);
+                }
                 
                 RequestDispatcher view = request.getRequestDispatcher("details.jsp");
                 view.forward(request,response);

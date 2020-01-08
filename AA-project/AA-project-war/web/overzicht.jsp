@@ -17,6 +17,9 @@
         td,th {
             padding: 6px;
         }
+        table{
+            padding-top:10px;
+        }
     </style>
     <body>
         <h1>Overzichtspagina</h1>

@@ -192,8 +192,28 @@ public class Database implements DatabaseLocal, DatabaseRemote {
     @Override
     public boolean MomentCheck(Object mnr, String start, String duurtijd, String datum)
     {
+        boolean oke = true;
+        List<Momenten> mom = getMachineMomenten(mnr);
+        Date dat1 = Date.valueOf(datum);
+        BigInteger startuur = new BigInteger(start);
+        List <Momenten> result = em.createQuery("SELECT m FROM Momenten m WHERE m.datum = :datum AND m.mnr = :mnr").setParameter("datum",dat1).setParameter("mnr", mnr).getResultList();
+        int i = 0;
+        while (i<result.size() && oke == true)
+        {
+            int Rstart = (result.get(i).getStrt()).intValue();
+            int Rduur = (result.get(i).getDuur()).intValue();
+            int sum = Integer.sum(Rstart, Rduur);
+            System.out.printf("startuur:%d duurtijd:%d \n", Rstart, Rduur);
+            
+            if (sum > startuur.doubleValue())
+            {
+                oke =! oke;
+            }
+            
+        i++;
+        }
       
-      return true;
+      return oke;
     }
     
     // functie voor het reserveren van een moment

@@ -16,7 +16,7 @@ import javax.ejb.Local;
 @Local
 public interface DatabaseLocal {
     public Object getGebruiker(String l);
-    public List<Machines> getMachines();
+    public List getMachines();
     public String getOpleiding(String naam);
     public Machines getMachine(BigDecimal mnr);
     public List getMachineMomenten(Object mnr);
