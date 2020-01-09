@@ -195,6 +195,20 @@ public class controller extends HttpServlet {
                         i++;
                     }
                 }
+                
+                    //Sorteren op datum d.m.v. anonieme klasse die compare beschrijft, de klasse Momenten dit laten implementeren werkte niet
+                Collections.sort(VrijMom, new Comparator<Momenten>() {
+                    @Override
+                    public int compare(Momenten m1, Momenten m2) {
+                      return m1.getDatum().compareTo(m2.getDatum());
+                    }
+                });
+                Collections.sort(ResMom, new Comparator<Momenten>() {
+                    @Override
+                    public int compare(Momenten m1, Momenten m2) {
+                      return m1.getDatum().compareTo(m2.getDatum());
+                    }
+                });
                 sessie.setAttribute("vrijmom",VrijMom);
                 sessie.setAttribute("resmom",ResMom);
                 sessie.setAttribute("user",user);
@@ -237,6 +251,20 @@ public class controller extends HttpServlet {
                         i++;
                     }
                 }
+                
+                    //Sorteren op datum d.m.v. anonieme klasse die compare beschrijft, de klasse Momenten dit laten implementeren werkte niet
+                Collections.sort(VrijMom, new Comparator<Momenten>() {
+                    @Override
+                    public int compare(Momenten m1, Momenten m2) {
+                      return m1.getDatum().compareTo(m2.getDatum());
+                    }
+                });
+                Collections.sort(ResMom, new Comparator<Momenten>() {
+                    @Override
+                    public int compare(Momenten m1, Momenten m2) {
+                      return m1.getDatum().compareTo(m2.getDatum());
+                    }
+                });
                 sessie.setAttribute("vrijmom",VrijMom);
                 sessie.setAttribute("resmom",ResMom);
                 sessie.setAttribute("user",user);

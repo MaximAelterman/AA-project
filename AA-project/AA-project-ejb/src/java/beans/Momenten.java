@@ -140,6 +140,5 @@ public class Momenten implements Serializable {
     @Override
     public String toString() {
         return "beans.Momenten[ momid=" + momid + " ]";
-    }
-    
+    }    
 }

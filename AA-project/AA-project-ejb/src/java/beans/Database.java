@@ -248,5 +248,4 @@ public class Database implements DatabaseLocal, DatabaseRemote {
         }
     }
     
-    
 }
