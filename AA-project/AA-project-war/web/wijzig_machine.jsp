@@ -7,12 +7,16 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.util.ArrayList"%>
+
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Machine toevoegen</title>
     </head>
+    <style>
+        <%@include file="styles.css"%>
+    </style>
     <body>
         <h1>Wijzig machine</h1>
         <h2>Gelieve volgende gegevens op te geven.</h2>
@@ -29,11 +33,13 @@
                     <tr><td>Huurprijs(1u):</td><td><input type="text" name="huurprijs" value="${machine.huurprijs}" required/></td></tr>
                     <tr><td>Omschrijving:</td><td><textarea cols="40" rows="6" name="omschrijving" required>${machine.omschrijving}</textarea></td></tr>
                     <tr>
-                        <td>
+                        <td class="knoppenbalk">
                             <input type="hidden" name="mnr" value="${machine.mnr}"/>
                             <input type="submit" name="knop" value="Wijzigingen opslaan"/>
                         </td>
-                        <td><input type="submit" name="knop" value="Annuleer" formnovalidate/></td>
+                        <td class="knoppenbalk">
+                            <input type="submit" name="knop" value="Annuleer" formnovalidate/>
+                        </td>
                     </tr>
                 </table>   
             </form>

@@ -203,12 +203,12 @@ public class controller extends HttpServlet {
                       return m1.getDatum().compareTo(m2.getDatum());
                     }
                 });
-                Collections.sort(ResMom, new Comparator<Momenten>() {
+                /*Collections.sort(ResMom, new Comparator<Momenten>() {
                     @Override
                     public int compare(Momenten m1, Momenten m2) {
                       return m1.getDatum().compareTo(m2.getDatum());
                     }
-                });
+                });*/
                 sessie.setAttribute("vrijmom",VrijMom);
                 sessie.setAttribute("resmom",ResMom);
                 sessie.setAttribute("user",user);
@@ -259,12 +259,12 @@ public class controller extends HttpServlet {
                       return m1.getDatum().compareTo(m2.getDatum());
                     }
                 });
-                Collections.sort(ResMom, new Comparator<Momenten>() {
+                /* Collections.sort(ResMom, new Comparator<Momenten>() {
                     @Override
                     public int compare(Momenten m1, Momenten m2) {
                       return m1.getDatum().compareTo(m2.getDatum());
                     }
-                });
+                });*/
                 sessie.setAttribute("vrijmom",VrijMom);
                 sessie.setAttribute("resmom",ResMom);
                 sessie.setAttribute("user",user);

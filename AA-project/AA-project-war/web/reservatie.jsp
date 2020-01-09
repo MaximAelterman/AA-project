@@ -25,8 +25,10 @@
             padding: 8px;
         }
         tr:nth-child(even) {
-            background-color: #dddddd;
+            background-color: #ffffff;
         }
+        .vrijMom { background-color: #66cc66; }
+        .resMom { background-color: #eedddd; } 
     </style>
     <body>
         <jsp:useBean id="date" class="java.util.Date"/>
@@ -46,7 +48,7 @@
             </tr>
             <c:set var="i" scope="session" value="0"/>
             <c:forEach var="resmom" items="${resmom}">
-                <tr>
+                <tr class = "resMom">
                     <td>${resmom.momid}</td>
                     <td>${resmom.strt}</td>
                     <td>${resmom.duur}</td>
@@ -68,12 +70,14 @@
             </tr>
             <c:forEach var="vrijmom" items="${vrijmom}">
                 <form method="post" action=<c:url value="/controller.do"/>>
-                <tr>
+                <tr class = "vrijMom">
                     <td>${vrijmom.momid}</td>
                     <td>${vrijmom.strt}</td>
                     <td>${vrijmom.duur}</td>
                     <td><fmt:formatDate value="${vrijmom.datum}" type="date" pattern="dd/MM/yyyy"></fmt:formatDate></td>
-                    <td><input type="submit" name="knop" value="Reserveer machine"/></td>
+                    <td>
+                        <input style="padding:5px" type="submit" name="knop" value="Reserveer machine"/>
+                    </td>
                     <input type="hidden" name="momid" value="${vrijmom.momid}"/>
                 </tr>
                 </form>
@@ -83,5 +87,5 @@
         
     </body>
 </html>
-<%@include file="footer.jsp"%>
+<%--<%@include file="footer.jsp"%>--%>
 

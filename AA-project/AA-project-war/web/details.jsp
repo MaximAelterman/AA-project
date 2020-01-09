@@ -53,7 +53,7 @@
         </form>
         
         <form method="post" action=<c:url value="/controller.do"/>>
-            <c:if test="${groep == 'Docent'}">
+            <c:if test="${groep == 'Docent'  && machine.opleiding == opleiding}">
                 <c:if test="${momentcheck == false}">
                     <p style="color: red;font-size: 14px; font-weight: bold"> Er is een overlap van het aangemaakte moment<p>
                 </c:if>

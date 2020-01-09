@@ -22,16 +22,14 @@
         }
     </style>
     <body>
-        <h1>Overzichtspagina</h1>
-        <h2>Welkom ${sessionScope.gebruiker}! </h2>
-        <h3>U bent ingelogd als ${sessionScope.groep}.</h3>
+        <div class="container">        
+            <%@include file="footer.jsp"%>
+            
+            <h1>Overzichtspagina</h1>
+            <h2>Welkom ${sessionScope.gebruiker}! </h2>
+            <h3>U bent ingelogd als ${sessionScope.groep}.</h3>
+
         
-        <div class="container">
-            <c:if test="${sessionScope.groep == 'Docent'}">
-                <form method= "post" action=<c:url value="/controller.do"/>>
-                   <input type="submit" name="knop" value="Nieuwe machine"/>
-                </form>
-            </c:if>
             <table>
                 <tr>
                     <th>Naam</th>
@@ -52,18 +50,26 @@
                                 <input type="submit" name="knop" value="Details"/>
                                 </c:if>
                             </td>
-                            <c:if test="${sessionScope.groep == 'Docent' && machine.opleiding == sessionScope.opleiding}">
-                                <td><input type="submit" name="knop" value="Wijzig"/></td>
-                            </c:if>
                             <td>
                                 <input type="submit" name="knop" value="Reserveer"/>
                             </td>
+                            <c:if test="${sessionScope.groep == 'Docent' && machine.opleiding == sessionScope.opleiding}">
+                                <td>
+                                    <input type="submit" name="knop" value="Wijzig"/>
+                                </td>
+                            </c:if>
                         </tr>
                     </form>
                 </c:forEach>
             </table>
+            <div style="padding-top: 15px">
+            <c:if test="${sessionScope.groep == 'Docent'}">
+                <form method= "post" action=<c:url value="/controller.do"/>>
+                   <input type="submit" name="knop" value="Nieuwe machine"/>
+                </form>
+            </c:if>
+            </div>
         </div>
     </body>
 </html>
-<%@include file="footer.jsp"%>
 
