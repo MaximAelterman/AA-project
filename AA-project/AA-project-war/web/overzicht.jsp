@@ -20,10 +20,16 @@
         table{
             padding-top:10px;
         }
+        .container{
+            width: auto;
+            max-width: 640px;
+        }
     </style>
     <body>
-        <div class="container">        
+        <div class="container">
+            <div style="float:right">
             <%@include file="footer.jsp"%>
+            </div>
             
             <h1>Overzichtspagina</h1>
             <h2>Welkom ${sessionScope.gebruiker}! </h2>

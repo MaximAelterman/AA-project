@@ -68,12 +68,9 @@
                 </p>
             </c:if>   
         </form>
-         <br>
-        
              
          <c:if test="${test == 'oke'}">
              <h2> Machine Momenten:</h2>
-             <br/>
              <table>
              <tr>
                 <th>MomID</th>

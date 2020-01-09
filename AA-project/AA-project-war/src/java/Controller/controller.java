@@ -164,6 +164,7 @@ public class controller extends HttpServlet {
                     Machines machine = (Machines) sessie.getAttribute("machine");
                     List<Momenten> machinemom = db.getMachineMomenten(machine);
                     sessie.setAttribute("machinemom",machinemom);
+                    sessie.setAttribute("momentcheck", check);
                 }
                 else{
                     sessie.setAttribute("momentcheck", check);

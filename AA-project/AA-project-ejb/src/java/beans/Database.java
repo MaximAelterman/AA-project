@@ -207,7 +207,11 @@ public class Database implements DatabaseLocal, DatabaseRemote {
             
             if (sum > startuur.doubleValue())
             {
-                oke =! oke;
+                oke = false;
+            }
+            if (sum == startuur.doubleValue())
+            {
+                oke = true;
             }
             
         i++;
