@@ -12,7 +12,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Machine toevoegen</title>
+        <title>Machine wijzigen</title>
     </head>
     <style>
         <%@include file="styles.css"%>

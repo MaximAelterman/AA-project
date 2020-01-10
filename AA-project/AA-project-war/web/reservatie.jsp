@@ -12,7 +12,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Reservatie Page</title>
+        <title>Reservatie pagina</title>
     </head>
     <style>
         table {
@@ -87,5 +87,4 @@
         
     </body>
 </html>
-<%--<%@include file="footer.jsp"%>--%>
 

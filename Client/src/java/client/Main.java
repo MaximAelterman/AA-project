@@ -5,9 +5,6 @@
  */
 package client;
 import beans.*;
-import java.math.BigDecimal;
-import java.util.List;
-import javax.ejb.EJB;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
@@ -23,7 +20,7 @@ public class Main {
     private static DatabaseRemote db = null;
     
     public static void main(String[] args) throws NamingException {
-        // TODO code application logic here
+            //wijzen naar Database bean via InitialContext
         InitialContext ic = new InitialContext();
         db = (DatabaseRemote) ic.lookup(DatabaseRemote.class.getName());
         Gui gui = new Gui(db);

@@ -11,10 +11,10 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Fout pagina</title>
     </head>
     <body>
-        <h1>ER IS EEN ERROR OPGETREDEN</h1>
+        <h1>Er is een fout opgetreden tijdens het inloggen.</h1>
         <br>
          <form method="post" action=<c:url value="/controller.do"/>>
              <input type="submit" name="knop" value="Login"/>

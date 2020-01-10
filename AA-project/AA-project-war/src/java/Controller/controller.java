@@ -25,7 +25,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author r0631
  */
-// @WebServlet(urlPatterns = {"/controller.do"})
+
 public class controller extends HttpServlet {
 
     /**
@@ -39,7 +39,6 @@ public class controller extends HttpServlet {
      */
     
     @EJB private DatabaseLocal db;
-
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -104,8 +103,8 @@ public class controller extends HttpServlet {
                 String huurprijs = request.getParameter("huurprijs");
                 String omschrijving = request.getParameter("omschrijving");
                 
-                BigDecimal nr =  db.addMachine(naam,serienr, locatie, opleiding, aankoopprijs, huurprijs, omschrijving);
-                HerladenMachines();                                         //om de machinelijst in de applicatie opnieuw in te laden
+                db.addMachine(naam,serienr, locatie, opleiding, aankoopprijs, huurprijs, omschrijving);
+                HerladenMachines();         //om de machinelijst in de applicatie opnieuw in te laden
                 
                 RequestDispatcher view = request.getRequestDispatcher("overzicht.jsp");
                 view.forward(request, response);
@@ -135,7 +134,7 @@ public class controller extends HttpServlet {
                 
                 db.wijzigMachine(mnr, naam, serienr, locatie, opleiding, aankoopprijs, huurprijs, omschrijving);
                
-                HerladenMachines();     //om de machinelijst in de applicatie opnieuw in te laden
+                HerladenMachines();         //om de machinelijst in de applicatie opnieuw in te laden
                           
                 RequestDispatcher view = request.getRequestDispatcher("overzicht.jsp");
                 view.forward(request, response);
@@ -204,17 +203,11 @@ public class controller extends HttpServlet {
                       return m1.getDatum().compareTo(m2.getDatum());
                     }
                 });
-                /*Collections.sort(ResMom, new Comparator<Momenten>() {
-                    @Override
-                    public int compare(Momenten m1, Momenten m2) {
-                      return m1.getDatum().compareTo(m2.getDatum());
-                    }
-                });*/
+                
                 sessie.setAttribute("vrijmom",VrijMom);
                 sessie.setAttribute("resmom",ResMom);
                 sessie.setAttribute("user",user);
 
-                
                 RequestDispatcher view = request.getRequestDispatcher ("reservatie.jsp" );
                 view.forward(request,response);
                 break;
@@ -260,12 +253,7 @@ public class controller extends HttpServlet {
                       return m1.getDatum().compareTo(m2.getDatum());
                     }
                 });
-                /* Collections.sort(ResMom, new Comparator<Momenten>() {
-                    @Override
-                    public int compare(Momenten m1, Momenten m2) {
-                      return m1.getDatum().compareTo(m2.getDatum());
-                    }
-                });*/
+                
                 sessie.setAttribute("vrijmom",VrijMom);
                 sessie.setAttribute("resmom",ResMom);
                 sessie.setAttribute("user",user);
@@ -327,8 +315,8 @@ public class controller extends HttpServlet {
     
     public void HerladenMachines()
     {
-        List<Machines> ma= db.getMachines();
-        getServletContext().setAttribute("machines",ma);
+        List<Machines> machine = db.getMachines();
+        getServletContext().setAttribute("machines", machine);
     }
 }
 

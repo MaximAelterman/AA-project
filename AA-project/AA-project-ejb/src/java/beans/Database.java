@@ -51,8 +51,6 @@ public class Database implements DatabaseLocal, DatabaseRemote {
     // functie voor ophalen alle machines    
     @Override
     public List getMachines() {
-        // List<Machines> machinelijst;
-        //machinelijst = (List<Machines>) em.createNamedQuery("Machines.findAll").getResultList();
         List machinelijst  = em.createNamedQuery("Machines.findAll").getResultList();
         return machinelijst;
     }
@@ -86,7 +84,7 @@ public class Database implements DatabaseLocal, DatabaseRemote {
     
     // functie voor het toevoegen van een nieuw machine
     @Override
-    public BigDecimal addMachine(String naam, String serienr, String locatie, String opleiding, String aankoopprijs, String huurprijs, String omschrijving){
+    public void addMachine(String naam, String serienr, String locatie, String opleiding, String aankoopprijs, String huurprijs, String omschrijving){
         try {
             Machines machine = new Machines();
             BigDecimal mnr = volgendMnr();
@@ -99,10 +97,8 @@ public class Database implements DatabaseLocal, DatabaseRemote {
             machine.setHuurprijs(new BigInteger(huurprijs));
             machine.setOmschrijving(omschrijving);
             em.persist(machine);
-            return mnr;
         } catch (Exception eee) {
             out.println("Fout bij aanmaken van machine: " + eee);
-            return new BigDecimal(0);
         }
     }
     
@@ -134,8 +130,6 @@ public class Database implements DatabaseLocal, DatabaseRemote {
     public void wijzigMachine(BigDecimal mnr, String naam, String serienr, String locatie, String opleiding, String aankoopprijs, String huurprijs, String omschrijving){
         try {
             Machines machine = (Machines) em.createQuery("SELECT m FROM Machines m WHERE m.mnr = :mnr").setParameter("mnr",mnr).getSingleResult();
-            //em.createNamedQuery("Machines.findByMnr", Machines.class).setParameter("mnr", ((Machines)mnr).getMnr()).getSingleResult();
-            //Machines machine = em.find(Machines.class, (Machines) mnr);
             machine.setMnaam(naam);
             machine.setSerienr(new BigInteger(serienr));
             machine.setMloc(locatie);
@@ -144,10 +138,8 @@ public class Database implements DatabaseLocal, DatabaseRemote {
             machine.setHuurprijs(new BigInteger(huurprijs));
             machine.setOmschrijving(omschrijving);
             em.persist(machine);
-//            return mnr;
         } catch (Exception eee) {
             out.println("Fout bij wijzigen van machine: " + eee);
-            //return new BigDecimal(0);
         }
     }
 
@@ -189,31 +181,36 @@ public class Database implements DatabaseLocal, DatabaseRemote {
         return (res.isEmpty()) ;
     }
     
+    // Toe te voegen moment controlleren op overlapping
     @Override
     public boolean MomentCheck(Object mnr, String start, String duurtijd, String datum)
     {
         boolean oke = true;
-        List<Momenten> mom = getMachineMomenten(mnr);
         Date dat1 = Date.valueOf(datum);
         BigInteger startuur = new BigInteger(start);
+        BigInteger duur = new BigInteger(duurtijd);
         List <Momenten> result = em.createQuery("SELECT m FROM Momenten m WHERE m.datum = :datum AND m.mnr = :mnr").setParameter("datum",dat1).setParameter("mnr", mnr).getResultList();
         int i = 0;
         while (i<result.size() && oke == true)
         {
-            int Rstart = (result.get(i).getStrt()).intValue();
+            int Rstart = (result.get(i).getStrt()).intValue();  //gegevens van bestaande momenten
             int Rduur = (result.get(i).getDuur()).intValue();
-            int sum = Integer.sum(Rstart, Rduur);
+            int eindtijd = Integer.sum(Rstart, Rduur);
             System.out.printf("startuur:%d duurtijd:%d \n", Rstart, Rduur);
             
-            if (sum > startuur.doubleValue())
-            {
-                oke = false;
+            for(int d = 0; d <= duur.intValue(); d++){
+                int tijd = startuur.intValue() + d;
+                    //nieuw moment mag niet toegevoegd worden als er overlapping is met een bestaand moment
+                if(Rstart < tijd && eindtijd >= tijd)  
+                {
+                        //nieuw moment mag wel toegevoegd worden als het start wanneer een bestaand moment eindigt
+                    if(startuur.intValue() != eindtijd)     
+                    {
+                        oke = false;
+                        break;
+                    }
+                }
             }
-            if (sum == startuur.doubleValue())
-            {
-                oke = true;
-            }
-            
         i++;
         }
       

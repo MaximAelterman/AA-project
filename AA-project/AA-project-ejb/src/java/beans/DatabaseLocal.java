@@ -22,7 +22,7 @@ public interface DatabaseLocal {
     public List getMachineMomenten(Object mnr);
     public List getMomenten();
     public Object getMoment(BigDecimal momid);
-    public BigDecimal addMachine(String naam, String serienr, String locatie, String opleiding, String aankoopprijs, String huurprijs, String omschrijving);
+    public void addMachine(String naam, String serienr, String locatie, String opleiding, String aankoopprijs, String huurprijs, String omschrijving);
     public void wijzigMachine(BigDecimal mnr, String naam, String serienr, String locatie, String opleiding, String aankoopprijs, String huurprijs, String omschrijving);
     public List getReservaties(BigDecimal Momnr);
     public void addMoment(Object mnr, String strt, String duurtijd, String datum);

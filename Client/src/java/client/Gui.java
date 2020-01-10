@@ -12,12 +12,9 @@ import beans.Reservaties;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.DateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import javax.swing.JFrame;
 import javax.swing.JTable;
-import javax.swing.table.TableColumn;
 
 /**
  *
@@ -30,7 +27,6 @@ public class Gui extends javax.swing.JFrame {
      */
     private DatabaseRemote db;
     private List<Machines> machines;
-    private List<Momenten> momenten;
         //machinelijst
     private String[] colNames = {"Mnr", "Naam", "Locatie"};                             //namen van colommen
     private Object[][] rowData;                                                         //wordt in applicatie ingevuld, rijen
@@ -74,10 +70,6 @@ public class Gui extends javax.swing.JFrame {
                 }
             }
         });
-        
-        
-        
-
     }
 
     /**
